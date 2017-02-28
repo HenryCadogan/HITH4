@@ -7,7 +7,11 @@ public class ButtonScript : MonoBehaviour {
 
 
 	public void LoadScene(string scene){
-		//Loads the given scene
+		//Loads the given scene, and removes scenario objects if the game is quit.
+		if(scene == "Main Menu" && (GameObject.Find("GlobalScripts") != null) && (GameObject.Find("NotebookCanvas") != null)){	//ADDITION BY WEDUNNIT
+			Destroy(GameObject.Find("GlobalScripts")); 	//ADDITION BY WEDUNNIT
+			Destroy(GameObject.Find("NotebookCanvas")); //ADDITION BY WEDUNNIT
+		}												//ADDITION BY WEDUNNIT
 		SceneManager.LoadScene(scene);
 	}
 
