@@ -1,0 +1,24 @@
+Initialize engine version: 5.4.3f1 (01f4c123905a)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.0]
+    Renderer: AMD Radeon(TM) R6 Graphics (ID=0x9874)
+    Vendor:   ATI
+    VRAM:     2295 MB
+Begin MonoManager ReloadAssembly
+Platform assembly: C:\Users\Ben\Documents\UNI\YEAR 2\SEPR\Assessment 3\Homicide in the Hub\HomicideintheHub_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading C:\Users\Ben\Documents\UNI\YEAR 2\SEPR\Assessment 3\Homicide in the Hub\HomicideintheHub_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: C:\Users\Ben\Documents\UNI\YEAR 2\SEPR\Assessment 3\Homicide in the Hub\HomicideintheHub_Data\Managed\Assembly-CSharp-firstpass.dll (this message is harmless)
+Loading C:\Users\Ben\Documents\UNI\YEAR 2\SEPR\Assessment 3\Homicide in the Hub\HomicideintheHub_Data\Managed\Assembly-CSharp-firstpass.dll into Unity Child Domain
+Platform assembly: C:\Users\Ben\Documents\UNI\YEAR 2\SEPR\Assessment 3\Homicide in the Hub\HomicideintheHub_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading C:\Users\Ben\Documents\UNI\YEAR 2\SEPR\Assessment 3\Homicide in the Hub\HomicideintheHub_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: C:\Users\Ben\Documents\UNI\YEAR 2\SEPR\Assessment 3\Homicide in the Hub\HomicideintheHub_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading C:\Users\Ben\Documents\UNI\YEAR 2\SEPR\Assessment 3\Homicide in the Hub\HomicideintheHub_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+Platform assembly: C:\Users\Ben\Documents\UNI\YEAR 2\SEPR\Assessment 3\Homicide in the Hub\HomicideintheHub_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
+Loading C:\Users\Ben\Documents\UNI\YEAR 2\SEPR\Assessment 3\Homicide in the Hub\HomicideintheHub_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
+- Completed reload, in  0.687 seconds
+Platform assembly: C:\Users\Ben\Documents\UNI\YEAR 2\SEPR\Assessment 3\Homicide in the Hub\HomicideintheHub_Data\Managed\System.Core.dll (this message is harmless)
+Platform assembly: C:\Users\Ben\Documents\UNI\YEAR 2\SEPR\Assessment 3\Homicide in the Hub\HomicideintheHub_Data\Managed\System.dll (this message is harmless)
+desktop: 1366x768 60Hz; virtual: 1366x768 at 0,0
+<RI> Initializing input.
+<RI> Input initialized.

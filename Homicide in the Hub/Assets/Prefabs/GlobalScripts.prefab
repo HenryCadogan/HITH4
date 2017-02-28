@@ -1,0 +1,139 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1000010786035590}
+  m_IsPrefabParent: 1
+--- !u!1 &1000010786035590
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 4000014215270876}
+  - 114: {fileID: 114000013358668900}
+  - 114: {fileID: 114000011245260916}
+  m_Layer: 0
+  m_Name: GlobalScripts
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4000014215270876
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000010786035590}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 888.70166, y: 581.26825, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+--- !u!114 &114000011245260916
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000010786035590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a8f3af8541b9d54e91631266ef2cee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114000013358668900
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000010786035590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a9dfb0e565681141b5c24c8b9367255, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pirateSprite: {fileID: 21300000, guid: 171914c7a30d6f146a2d87ebd4850893, type: 3}
+  mimesSprite: {fileID: 21300000, guid: b011a2621728e004f9c7ff1cb06d9ada, type: 3}
+  millionaireSprite: {fileID: 21300000, guid: 8d26f1692cf51784f9cd0714b3790d54, type: 3}
+  cowgirlSprite: {fileID: 21300000, guid: b218f30e15d24b643bd822cb75fe8621, type: 3}
+  romanSprite: {fileID: 21300000, guid: 6e67bba55ca91e048b6556e894d4d9c0, type: 3}
+  wizardSprite: {fileID: 21300000, guid: 59806aadf8aff5a4a966e2a8a31abc47, type: 3}
+  robotSprite: {fileID: 21300000, guid: 22841c7fa6bf14cfab328ac11ca8b316, type: 3}
+  astrogirlSprite: {fileID: 21300000, guid: 638c59a8070d84ad0ad768ea0b9ee133, type: 3}
+  chefSprite: {fileID: 21300000, guid: aca730fa8e6274a89b539a3621b06c16, type: 3}
+  madscientistSprite: {fileID: 21300000, guid: 195e2a3680695497db2d77611b2e28da, type: 3}
+  piratePref: {fileID: 1000012052528108, guid: 23c3dbcce8c83f94191f5669a3dcd943, type: 2}
+  mimesPref: {fileID: 1000014248203420, guid: 35cea8c3074a7e544af1f3b3250f082b, type: 2}
+  millionarePref: {fileID: 1000010443679556, guid: e971c89cc8a127f4ea3fc0ae67e10fa0,
+    type: 2}
+  cowgirlPref: {fileID: 1000010018440972, guid: abcbbaa864d949e48956685deb43bacd,
+    type: 2}
+  romanPref: {fileID: 1000013366649182, guid: 673a48f04509f784eb090e9173d544fb, type: 2}
+  wizardPref: {fileID: 1000011775265398, guid: 11a5a4cec74ede240909d81339630455, type: 2}
+  robotPref: {fileID: 0}
+  astrogirlPref: {fileID: 0}
+  chefPref: {fileID: 0}
+  madscientistPref: {fileID: 0}
+  cutlassSprite: {fileID: 21300000, guid: 4a022570aa7d763458d11a4fdf8d08ee, type: 3}
+  poisonSprite: {fileID: 21300000, guid: 9a4cbcfbf3949db40b5d3a4556f8cb05, type: 3}
+  garroteSprite: {fileID: 21300000, guid: adaca16618847094cb9bec55bc244d28, type: 3}
+  knifeSprite: {fileID: 21300000, guid: 9331c6724789d684eaa9273ee0184f85, type: 3}
+  laserGunSprite: {fileID: 21300000, guid: 89887a068f6a573419c5373beb5c5874, type: 3}
+  leadPipeSprite: {fileID: 21300000, guid: 5bb7187490a918f4987c39ce37651aba, type: 3}
+  westernPistolSprite: {fileID: 21300000, guid: eb4a8c73e5edd7f4cadd4fab9050f5de,
+    type: 3}
+  wizardStaffSprite: {fileID: 21300000, guid: 87e738072f92f734cb8778526424cfa5, type: 3}
+  beretSprite: {fileID: 21300000, guid: f5f871d63360a2046ac3a749dafe640c, type: 3}
+  footprintsSprite: {fileID: 21300000, guid: b1219fe3c4fab194da62205cb45bbee2, type: 3}
+  glovesSprite: {fileID: 21300000, guid: d2861761e1045a343b9d5809e541d735, type: 3}
+  wineSprite: {fileID: 21300000, guid: 515968758ea9eba4bb873388e9ea123c, type: 3}
+  shatteredGlassSprite: {fileID: 21300000, guid: 547cb49f53daac04ca2bb1101d218b2e,
+    type: 3}
+  shrapnelSprite: {fileID: 21300000, guid: 72879c784eb6315498eaa40f41ba3e72, type: 3}
+  smellyDeathSprite: {fileID: 21300000, guid: 07d10b63eb2d7354eac51581f2e6e0ad, type: 3}
+  spellbookSprite: {fileID: 21300000, guid: 0754b189f5d3ef34393c1394cbbe1363, type: 3}
+  tripwireSprite: {fileID: 21300000, guid: 10fc48e3fb110b54abd85bf32b937f6a, type: 3}
+  cutlassPrefab: {fileID: 1000013884477494, guid: a8b021bd236fc104d8651e1cf3a4aa1f,
+    type: 2}
+  poisonPrefab: {fileID: 1000011360912290, guid: b98c5aa485393b74bb6596635ab0513e,
+    type: 2}
+  garrotePrefab: {fileID: 1000013307260762, guid: 044c73106bd790145834faf467d22dd7,
+    type: 2}
+  knifePrefab: {fileID: 1000012383683526, guid: 5804a5227acb9674e9f2bda39995e2be,
+    type: 2}
+  laserGunPrefab: {fileID: 1000013065120426, guid: bbad71eed0d537441b3e1e2086efc6e2,
+    type: 2}
+  leadPipePrefab: {fileID: 1000013732499632, guid: b3d885c4bbae91042988e1788a921c67,
+    type: 2}
+  westernPistolPrefab: {fileID: 1000014173471226, guid: 32d84d0709732a64b8bc95c2c44273ea,
+    type: 2}
+  wizardStaffPrefab: {fileID: 1000013118864956, guid: 86cfb6a7cf979eb47a515a4787cd34ab,
+    type: 2}
+  beretPrefab: {fileID: 1000011106891596, guid: 04db86cbc22fa1341a93372cd495a262,
+    type: 2}
+  footprintsPrefab: {fileID: 1000011402005894, guid: 6f10e493859b62a42bd159e3788e91b0,
+    type: 2}
+  glovesPrefab: {fileID: 1000013911593926, guid: 6e44c5d4a66883d4d9e25c5ed21c5813,
+    type: 2}
+  winePrefab: {fileID: 1000010066353902, guid: 2b5187defcbe3ad47be7a2f78cc0b9cc, type: 2}
+  shatteredGlassPrefab: {fileID: 1000013118900410, guid: dbb547847b03b084ebbf593ff536b823,
+    type: 2}
+  shrapnelPrefab: {fileID: 1000010954660700, guid: 860dc2c87ba64f649bde4e1a06b8c1fb,
+    type: 2}
+  smellyDeathPrefab: {fileID: 1000011102974580, guid: f9d6295ea69f53d49be58b5572c63d2b,
+    type: 2}
+  spellbookPrefab: {fileID: 1000012300291214, guid: 8b884f207599c2544a0248a6cc8a7810,
+    type: 2}
+  tripwirePrefab: {fileID: 1000010035399056, guid: 74fb0ae9c106c4e4893dbdde3bc23cfd,
+    type: 2}

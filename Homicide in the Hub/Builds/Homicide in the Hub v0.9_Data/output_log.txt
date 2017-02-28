@@ -1,0 +1,121 @@
+Mono path[0] = 'C:/Users/Chris Whitlam/Documents/Computer Science/2nd Year/SEPR/Repo/HITH-Global/Homicide in the Hub/Builds/Homicide in the Hub v0.9_Data/Managed'
+Mono path[1] = 'C:/Users/Chris Whitlam/Documents/Computer Science/2nd Year/SEPR/Repo/HITH-Global/Homicide in the Hub/Builds/Homicide in the Hub v0.9_Data/Mono'
+Mono config path = 'C:/Users/Chris Whitlam/Documents/Computer Science/2nd Year/SEPR/Repo/HITH-Global/Homicide in the Hub/Builds/Homicide in the Hub v0.9_Data/Mono/etc'
+PlayerConnection initialized from C:/Users/Chris Whitlam/Documents/Computer Science/2nd Year/SEPR/Repo/HITH-Global/Homicide in the Hub/Builds/Homicide in the Hub v0.9_Data (debug = 0)
+PlayerConnection initialized network socket : 0.0.0.0 55388
+Multi-casting "[IP] 0.0.0.0 [Port] 55388 [Flags] 2 [Guid] 1999937410 [EditorId] 1276202160 [Version] 1048832 [Id] WindowsPlayer(GeForce-PC) [Debug] 0" to [225.0.0.222:54997]...
+PlayerConnection already initialized - listening to [0.0.0.0:55388]
+Initialize engine version: 5.4.3f1 (01f4c123905a)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.0]
+    Renderer: NVIDIA GeForce 840M (ID=0x1341)
+    Vendor:   NVIDIA
+    VRAM:     3072 MB
+Begin MonoManager ReloadAssembly
+Platform assembly: C:\Users\Chris Whitlam\Documents\Computer Science\2nd Year\SEPR\Repo\HITH-Global\Homicide in the Hub\Builds\Homicide in the Hub v0.9_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading C:\Users\Chris Whitlam\Documents\Computer Science\2nd Year\SEPR\Repo\HITH-Global\Homicide in the Hub\Builds\Homicide in the Hub v0.9_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: C:\Users\Chris Whitlam\Documents\Computer Science\2nd Year\SEPR\Repo\HITH-Global\Homicide in the Hub\Builds\Homicide in the Hub v0.9_Data\Managed\Assembly-CSharp-firstpass.dll (this message is harmless)
+Loading C:\Users\Chris Whitlam\Documents\Computer Science\2nd Year\SEPR\Repo\HITH-Global\Homicide in the Hub\Builds\Homicide in the Hub v0.9_Data\Managed\Assembly-CSharp-firstpass.dll into Unity Child Domain
+Platform assembly: C:\Users\Chris Whitlam\Documents\Computer Science\2nd Year\SEPR\Repo\HITH-Global\Homicide in the Hub\Builds\Homicide in the Hub v0.9_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading C:\Users\Chris Whitlam\Documents\Computer Science\2nd Year\SEPR\Repo\HITH-Global\Homicide in the Hub\Builds\Homicide in the Hub v0.9_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: C:\Users\Chris Whitlam\Documents\Computer Science\2nd Year\SEPR\Repo\HITH-Global\Homicide in the Hub\Builds\Homicide in the Hub v0.9_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading C:\Users\Chris Whitlam\Documents\Computer Science\2nd Year\SEPR\Repo\HITH-Global\Homicide in the Hub\Builds\Homicide in the Hub v0.9_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+Platform assembly: C:\Users\Chris Whitlam\Documents\Computer Science\2nd Year\SEPR\Repo\HITH-Global\Homicide in the Hub\Builds\Homicide in the Hub v0.9_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
+Loading C:\Users\Chris Whitlam\Documents\Computer Science\2nd Year\SEPR\Repo\HITH-Global\Homicide in the Hub\Builds\Homicide in the Hub v0.9_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
+- Completed reload, in  0.088 seconds
+Platform assembly: C:\Users\Chris Whitlam\Documents\Computer Science\2nd Year\SEPR\Repo\HITH-Global\Homicide in the Hub\Builds\Homicide in the Hub v0.9_Data\Managed\System.Core.dll (this message is harmless)
+Platform assembly: C:\Users\Chris Whitlam\Documents\Computer Science\2nd Year\SEPR\Repo\HITH-Global\Homicide in the Hub\Builds\Homicide in the Hub v0.9_Data\Managed\System.dll (this message is harmless)
+desktop: 1920x1080 60Hz; virtual: 1920x1080 at 0,0
+<RI> Initializing input.
+<RI> Input initialized.
+<RI> Initialized touch support.
+UnloadTime: 0.918995 ms
+Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 5.605948 ms
+System memory in use before: 16.9 MB.
+System memory in use after: 17.0 MB.
+
+Unloading 12 unused Assets to reduce memory usage. Loaded Objects now: 1112.
+Total: 0.750038 ms (FindLiveObjects: 0.054871 ms CreateObjectMapping: 0.026448 ms MarkObjects: 0.594109 ms  DeleteObjects: 0.073030 ms)
+
+Unloading 6 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.648981 ms
+System memory in use before: 17.2 MB.
+System memory in use after: 17.2 MB.
+
+Unloading 7 unused Assets to reduce memory usage. Loaded Objects now: 1536.
+Total: 1.079661 ms (FindLiveObjects: 0.074609 ms CreateObjectMapping: 0.040265 ms MarkObjects: 0.949786 ms  DeleteObjects: 0.014211 ms)
+
+Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 1.515868 ms
+System memory in use before: 17.1 MB.
+System memory in use after: 17.2 MB.
+
+Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 1524.
+Total: 1.402177 ms (FindLiveObjects: 0.079740 ms CreateObjectMapping: 0.040265 ms MarkObjects: 0.960444 ms  DeleteObjects: 0.320937 ms)
+
+Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.898072 ms
+System memory in use before: 17.1 MB.
+System memory in use after: 17.1 MB.
+
+Unloading 9 unused Assets to reduce memory usage. Loaded Objects now: 1447.
+Total: 1.069002 ms (FindLiveObjects: 0.081714 ms CreateObjectMapping: 0.040265 ms MarkObjects: 0.930048 ms  DeleteObjects: 0.016185 ms)
+
+Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.749249 ms
+System memory in use before: 17.2 MB.
+System memory in use after: 17.2 MB.
+
+Unloading 10 unused Assets to reduce memory usage. Loaded Objects now: 1691.
+Total: 1.306251 ms (FindLiveObjects: 0.086057 ms CreateObjectMapping: 0.040265 ms MarkObjects: 1.144401 ms  DeleteObjects: 0.034738 ms)
+
+Unloading 6 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.674640 ms
+System memory in use before: 17.2 MB.
+System memory in use after: 17.3 MB.
+
+Unloading 5 unused Assets to reduce memory usage. Loaded Objects now: 1544.
+Total: 1.010578 ms (FindLiveObjects: 0.066319 ms CreateObjectMapping: 0.040265 ms MarkObjects: 0.890177 ms  DeleteObjects: 0.012632 ms)
+
+Unloading 6 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.667929 ms
+System memory in use before: 17.2 MB.
+System memory in use after: 17.3 MB.
+
+Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 1528.
+Total: 1.489024 ms (FindLiveObjects: 0.093557 ms CreateObjectMapping: 0.046186 ms MarkObjects: 1.000709 ms  DeleteObjects: 0.347386 ms)
+
+Unloading 6 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 1.172034 ms
+System memory in use before: 17.2 MB.
+System memory in use after: 17.2 MB.
+
+Unloading 3 unused Assets to reduce memory usage. Loaded Objects now: 1528.
+Total: 1.112426 ms (FindLiveObjects: 0.073030 ms CreateObjectMapping: 0.039870 ms MarkObjects: 0.988077 ms  DeleteObjects: 0.010658 ms)
+
+Unloading 6 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.634769 ms
+System memory in use before: 17.2 MB.
+System memory in use after: 17.3 MB.
+
+Unloading 3 unused Assets to reduce memory usage. Loaded Objects now: 1536.
+Total: 1.091503 ms (FindLiveObjects: 0.069872 ms CreateObjectMapping: 0.052897 ms MarkObjects: 0.956496 ms  DeleteObjects: 0.010658 ms)
+
+Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.819121 ms
+System memory in use before: 17.2 MB.
+System memory in use after: 17.3 MB.
+
+Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 1453.
+Total: 1.097030 ms (FindLiveObjects: 0.070661 ms CreateObjectMapping: 0.040265 ms MarkObjects: 0.969918 ms  DeleteObjects: 0.015395 ms)
+
+Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.716089 ms
+System memory in use before: 17.3 MB.
+System memory in use after: 17.4 MB.
+
+Unloading 10 unused Assets to reduce memory usage. Loaded Objects now: 1697.
+Total: 1.340201 ms (FindLiveObjects: 0.096715 ms CreateObjectMapping: 0.040265 ms MarkObjects: 1.159796 ms  DeleteObjects: 0.042239 ms)
+
