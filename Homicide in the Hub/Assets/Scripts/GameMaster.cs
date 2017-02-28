@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq; //Used for take in pick items
 
-//URL For Build of the game is: https://drive.google.com/open?id=0ByQwSszKHcvaUXRCcTZYQ2ZsTDg 
-
 public class GameMaster : MonoBehaviour {
 	/* Initialises all of the objects required generate the mystery and the game world except the detectives and verbal clues. 
 	 * Distibutes the clues and characters throughout the scenes.
