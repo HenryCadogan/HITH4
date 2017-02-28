@@ -16,11 +16,11 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 4000014215270876}
-  - 114: {fileID: 114000013358668900}
-  - 114: {fileID: 114000011245260916}
+  - component: {fileID: 4000014215270876}
+  - component: {fileID: 114000013358668900}
+  - component: {fileID: 114000011245260916}
   m_Layer: 0
   m_Name: GlobalScripts
   m_TagString: Untagged
@@ -37,10 +37,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 888.70166, y: 581.26825, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &114000011245260916
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -104,6 +104,7 @@ MonoBehaviour:
   smellyDeathSprite: {fileID: 21300000, guid: 07d10b63eb2d7354eac51581f2e6e0ad, type: 3}
   spellbookSprite: {fileID: 21300000, guid: 0754b189f5d3ef34393c1394cbbe1363, type: 3}
   tripwireSprite: {fileID: 21300000, guid: 10fc48e3fb110b54abd85bf32b937f6a, type: 3}
+  keySprite: {fileID: 0}
   cutlassPrefab: {fileID: 1000013884477494, guid: a8b021bd236fc104d8651e1cf3a4aa1f,
     type: 2}
   poisonPrefab: {fileID: 1000011360912290, guid: b98c5aa485393b74bb6596635ab0513e,
@@ -137,3 +138,4 @@ MonoBehaviour:
     type: 2}
   tripwirePrefab: {fileID: 1000010035399056, guid: 74fb0ae9c106c4e4893dbdde3bc23cfd,
     type: 2}
+  keyPrefab: {fileID: 1000010232213170, guid: 064b48ae4ace2f34a892e113110b1930, type: 2}

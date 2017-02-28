@@ -16,6 +16,7 @@ public class QuestioningScript : MonoBehaviour
     private NonPlayerCharacter character;
     public GameObject detectiveGameObject;
     public GameObject characterGameObject;
+	public Text characterName; //ADDITION BY WEDUNNIT
 
     public Text[] detectiveStylesText = new Text[3]; //Where Left-most button is 1 and rightmost is 3
     public Text clueSpeech;         //Where the clue text is written to
@@ -37,6 +38,9 @@ public class QuestioningScript : MonoBehaviour
 
             SpriteRenderer characterSR = characterGameObject.GetComponent<SpriteRenderer>();
             characterSR.sprite = character.getSprite();
+
+			characterName.text = character.getCharacterID (); //ADDITION BY WEDUNNIT
+
 
             //Set Text in Style buttons to Styles of chosen detective
             for (int i = 0; i < 3; i++)
