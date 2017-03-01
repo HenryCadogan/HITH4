@@ -96,10 +96,10 @@ public class CharacterSelector : MonoBehaviour {
 	//Called when the play button is pressed
 	public void SelectDetective(){
 		if (!isMultiGame) {
-			GameMaster.instance.CreateNewGame (false, detectives [detectiveCounter]);	//UPDATED BY WEDUNNIT
+			GameMaster.instance.CreateNewGame (detectives [detectiveCounter]);	//UPDATED BY WEDUNNIT
 			SceneManager.LoadScene ("Atrium");
 		}else if (currentPlayer >= 1) {	//If all detectives have chosen //ADDITION BY WEDUNNIT
-			GameMaster.instance.CreateNewGame (true, detectives [player1Detective], detectives [detectiveCounter]);	//UPDATED BY WEDUNNIT
+			GameMaster.instance.CreateNewGame (detectives [player1Detective], detectives [detectiveCounter], true);	//UPDATED BY WEDUNNIT
 			SceneManager.LoadScene ("Atrium");
 		} else {
 			currentPlayer++; 	//ADDITON BY WEDUNNIT

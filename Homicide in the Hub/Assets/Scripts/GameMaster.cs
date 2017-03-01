@@ -106,7 +106,7 @@ public class GameMaster : MonoBehaviour {
 
 	//Multiplayer Variables ADDITION BY WEDUNNIT
 	private bool isMultiplayer;
-	private const int TURNS_PER_GO = 5;
+	private const int TURNS_PER_GO = 2;
 	int currentTurns = TURNS_PER_GO;
 	int currentPlayerIndex = 0;
 
@@ -362,14 +362,14 @@ public class GameMaster : MonoBehaviour {
         
 	}
 
-	public void CreateNewGame(bool isMultiPlayer, PlayerCharacter detective, PlayerCharacter detective2=null){ //Called when the player presses play //UPDATED BY WEDUNNIT
+	public void CreateNewGame(PlayerCharacter detective, PlayerCharacter detective2=null, bool isMulti = false){ //Called when the player presses play //UPDATED BY WEDUNNIT
 		//Reset values from a previous playthough
 		ResetNotebook();
 		ResetAll(scenes);
 
 		//Create a Scenario
 		scenario = new Scenario (murderWeapons, itemClues, characters);
-		this.isMultiplayer = isMultiplayer; 	//ADDITON BY WEDUNNIT
+		this.isMultiplayer = isMulti; 	//ADDITON BY WEDUNNIT
 
 		scenario.chooseMotive ();
 		string motive = scenario.getMotive ();
@@ -401,7 +401,15 @@ public class GameMaster : MonoBehaviour {
 		
 
 	public PlayerCharacter GetPlayerCharacter(){
+		if ((currentTurns <= 0) && (isMultiplayer)) {							//ADDITION BY WEDUNNIT
+			switchPlayers ();								//ADDITION BY WEDUNNIT
+		}
 		return playerCharacters[currentPlayerIndex];
+	}
+
+	public void switchPlayers(){							//ADDITION BY WEDUNNIT
+		currentPlayerIndex = 1 - currentPlayerIndex;
+		currentTurns = TURNS_PER_GO;
 	}
 
 	public Scene GetScene(string sceneName){
@@ -426,7 +434,8 @@ public class GameMaster : MonoBehaviour {
 	/// <returns><c>true</c>, if there are turns left, <c>false</c> otherwise.</returns>
 	public bool useTurn(){
 		currentTurns--;
-		return currentTurns == 0;
+		print (currentTurns.ToString () + " turns remaining");
+		return currentTurns <= 0;
 	}
 
 	public List<Item> GetRelevantItems(){

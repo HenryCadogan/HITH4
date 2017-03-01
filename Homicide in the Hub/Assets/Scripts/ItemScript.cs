@@ -23,6 +23,8 @@ public class ItemScript : MonoBehaviour {
             GameMaster.instance.foundKey();
         }
         
+		GameMaster.instance.useTurn ();	//ADDITION BY WEDUNNIT
+
         //Plays mysterious sfx by adding audio source to the local scripts game object (an instance is present in every scene), and playing the sound
 		GameObject.Find ("Local Scripts").AddComponent<AudioSource> ();							//ADDITION BY WEDUNNIT
 		GameObject.Find ("Local Scripts").GetComponent<AudioSource> ().clip = Resources.Load<AudioClip> ("Sounds/mysterious-sfx"); //ADDITION BY WEDUNNIT

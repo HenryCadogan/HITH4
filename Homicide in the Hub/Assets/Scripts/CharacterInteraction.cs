@@ -16,6 +16,7 @@ public class CharacterInteraction : MonoBehaviour {
 
 	//When the character is clicked on
 	void OnMouseDown() {
+		GameMaster.instance.useTurn ();					//ADDITION BY WEDUNNIT
         //Pass the character and current scene to the interrogation script to be used in the interrogation room
         InterrogationScript.instance.SetInterrogationCharacter (character);
         Debug.Log(character.getNickname());
