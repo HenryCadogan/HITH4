@@ -35,6 +35,10 @@ public class CharacterSelector : MonoBehaviour {
 	public Text GUIDescription;
 	private int detectiveCounter = 0;
 
+	public bool isMultiGame; //ADDITION BY WEDUNNIT
+	private int player1Detective = 	-1;
+	private int currentPlayer = 0;
+
 
 	// Use this for initialization
 	void Start () {
@@ -52,6 +56,15 @@ public class CharacterSelector : MonoBehaviour {
 		if (detectiveCounter >= 3) {
 			detectiveCounter = 0;
 		}
+
+		//If the selected detective has already been chosen, switch to the next.
+		if (detectiveCounter == player1Detective) {	//ADDITON BY WEDUNNIT
+			print("rg");
+			detectiveCounter += 1;					//ADDITON BY WEDUNNIT
+			if (detectiveCounter >= 3) {			//ADDITON BY WEDUNNIT
+				detectiveCounter = 0;				//ADDITON BY WEDUNNIT
+			}
+		}
 		ChangeDetective();
 	}
 
@@ -60,6 +73,16 @@ public class CharacterSelector : MonoBehaviour {
 		detectiveCounter -= 1;
 		if (detectiveCounter <= -1) {
 			detectiveCounter = 2;
+		}
+
+		//If the selected detective has already been chosen, switch to the next.
+		print(detectiveCounter);
+		print(player1Detective);
+		if (detectiveCounter == player1Detective) {	//ADDITON BY WEDUNNIT
+			detectiveCounter -= 1;					//ADDITON BY WEDUNNIT
+			if (detectiveCounter <= -1) {			//ADDITON BY WEDUNNIT
+				detectiveCounter = 2;				//ADDITON BY WEDUNNIT
+			}
 		}
 		ChangeDetective();
 	}
@@ -74,8 +97,18 @@ public class CharacterSelector : MonoBehaviour {
 
 	//Called when the play button is pressed
 	public void SelectDetective(){
-		GameMaster.instance.CreateNewGame (detectives [detectiveCounter]);
-		SceneManager.LoadScene ("Atrium");
+		if (!isMultiGame) {
+			GameMaster.instance.CreateNewGame (detectives [detectiveCounter]);	//UPDATED BY WEDUNNIT
+			SceneManager.LoadScene ("Atrium");
+		}else if (currentPlayer >= 1) {	//If all detectives have chosen //ADDITION BY WEDUNNIT
+			GameMaster.instance.CreateNewGame (detectives [player1Detective], detectives [detectiveCounter]);	//UPDATED BY WEDUNNIT
+			SceneManager.LoadScene ("Atrium");
+		} else {
+			currentPlayer++; 	//ADDITON BY WEDUNNIT
+			player1Detective = detectiveCounter;
+			CycleDownDetectives ();
+			GameObject.Find("Title").GetComponent<Text>().text = "Player "+(currentPlayer+1).ToString()+ ": Select your Detective";
+		}
 	}
 
 }

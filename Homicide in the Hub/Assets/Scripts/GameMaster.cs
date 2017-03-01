@@ -24,7 +24,7 @@ public class GameMaster : MonoBehaviour {
 
 //NPC Sprites
 //Made public to allow for dragging and dropping of Sprites
-public Sprite pirateSprite;
+	public Sprite pirateSprite;
 	public Sprite mimesSprite;
 	public Sprite millionaireSprite;
 	public Sprite cowgirlSprite;
@@ -103,6 +103,8 @@ public Sprite pirateSprite;
     // floats for the timer
     private float timer;
     private bool run_timer = true;
+
+	public bool modeIsMultiplayer; //ADDITION BY WEDUNNIT
 
 	//Sets as a Singleton
 	void Awake () {  //Makes this a singleton class on awake
@@ -355,7 +357,7 @@ public Sprite pirateSprite;
         
 	}
 
-	public void CreateNewGame(PlayerCharacter detective){ //Called when the player presses play
+	public void CreateNewGame(PlayerCharacter detective, PlayerCharacter detective2=null){ //Called when the player presses play //UPDATED BY WEDUNNIT
 		//Reset values from a previous playthough
 		ResetNotebook();
 		ResetAll(scenes);
