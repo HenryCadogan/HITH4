@@ -76,8 +76,6 @@ public class CharacterSelector : MonoBehaviour {
 		}
 
 		//If the selected detective has already been chosen, switch to the next.
-		print(detectiveCounter);
-		print(player1Detective);
 		if (detectiveCounter == player1Detective) {	//ADDITON BY WEDUNNIT
 			detectiveCounter -= 1;					//ADDITON BY WEDUNNIT
 			if (detectiveCounter <= -1) {			//ADDITON BY WEDUNNIT
@@ -98,10 +96,10 @@ public class CharacterSelector : MonoBehaviour {
 	//Called when the play button is pressed
 	public void SelectDetective(){
 		if (!isMultiGame) {
-			GameMaster.instance.CreateNewGame (detectives [detectiveCounter]);	//UPDATED BY WEDUNNIT
+			GameMaster.instance.CreateNewGame (false, detectives [detectiveCounter]);	//UPDATED BY WEDUNNIT
 			SceneManager.LoadScene ("Atrium");
 		}else if (currentPlayer >= 1) {	//If all detectives have chosen //ADDITION BY WEDUNNIT
-			GameMaster.instance.CreateNewGame (detectives [player1Detective], detectives [detectiveCounter]);	//UPDATED BY WEDUNNIT
+			GameMaster.instance.CreateNewGame (true, detectives [player1Detective], detectives [detectiveCounter]);	//UPDATED BY WEDUNNIT
 			SceneManager.LoadScene ("Atrium");
 		} else {
 			currentPlayer++; 	//ADDITON BY WEDUNNIT
