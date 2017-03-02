@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using System.Linq; //Used for take in pick items
+using System.Linq; 		//Used for take in pick items
+using UnityEngine.UI;	//Used for editing text compnents ADDITION BY WEDUNNIT
 
 public class GameMaster : MonoBehaviour {
 	/* Initialises all of the objects required generate the mystery and the game world except the detectives and verbal clues. 
@@ -109,6 +110,7 @@ public class GameMaster : MonoBehaviour {
 	private const int TURNS_PER_GO = 2;
 	int currentTurns = TURNS_PER_GO;
 	int currentPlayerIndex = 0;
+	int[] collectedClueCount = new int[2];	//used to store collected clue counters used for scoring
 
 	//Sets as a Singleton
 	void Awake () {  //Makes this a singleton class on awake
@@ -401,15 +403,20 @@ public class GameMaster : MonoBehaviour {
 		
 
 	public PlayerCharacter GetPlayerCharacter(){
-		if ((currentTurns <= 0) && (isMultiplayer)) {							//ADDITION BY WEDUNNIT
+		if ((currentTurns <= 0) && (isMultiplayer)) {		//ADDITION BY WEDUNNIT
 			switchPlayers ();								//ADDITION BY WEDUNNIT
 		}
 		return playerCharacters[currentPlayerIndex];
 	}
 
-	public void switchPlayers(){							//ADDITION BY WEDUNNIT
+	private void displayCharacterChange(){
+		print("Player " + (currentPlayerIndex + 1).ToString() + ", it's your turn!");
+	}
+
+	public void switchPlayers(){							//alternates the current character ADDITION BY WEDUNNIT
 		currentPlayerIndex = 1 - currentPlayerIndex;
 		currentTurns = TURNS_PER_GO;
+		displayCharacterChange ();
 	}
 
 	public Scene GetScene(string sceneName){
@@ -421,11 +428,27 @@ public class GameMaster : MonoBehaviour {
 		return null;
 	}
 
+	public void clueCollected(){							//method to increment score count each time a clue is collected, used for multiplayer scoring ADDITION BY WEDUNNIT 
+		collectedClueCount [currentPlayerIndex]++;
+		print ("Clues collected by current player: " + collectedClueCount [currentPlayerIndex].ToString());
+	}
+
 	public void ResetAll(Scene[] scenes){
 		foreach (Scene scene in scenes) {
 			scene.ResetScene ();
 		}
 
+	}
+
+	private void displayTurns(int currentTurns){	//Displays current turns to the screen if playing multiplayer ADDITION BY WEDUNNIT,
+		if (isMultiplayer) {
+			//GameObject.Find ("Turn Counter").GetComponent<Text> ().text = "Turns remaining: " + currentTurns.ToString ();
+			Debug.Log ("Turns remaining: " + currentTurns.ToString ());
+		}
+	}
+
+	public int getTurns(){		//ADDITIOM BY WEDUNNIT
+		return currentTurns;
 	}
 
 	/// <summary>
@@ -434,7 +457,7 @@ public class GameMaster : MonoBehaviour {
 	/// <returns><c>true</c>, if there are turns left, <c>false</c> otherwise.</returns>
 	public bool useTurn(){
 		currentTurns--;
-		print (currentTurns.ToString () + " turns remaining");
+		displayTurns (currentTurns);
 		return currentTurns <= 0;
 	}
 

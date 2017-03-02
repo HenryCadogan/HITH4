@@ -16,18 +16,20 @@ public class CharacterInteraction : MonoBehaviour {
 
 	//When the character is clicked on
 	void OnMouseDown() {
-		GameMaster.instance.useTurn ();					//ADDITION BY WEDUNNIT
-        //Pass the character and current scene to the interrogation script to be used in the interrogation room
-        InterrogationScript.instance.SetInterrogationCharacter (character);
-        Debug.Log(character.getNickname());
+		if (GameMaster.instance.getTurns () > 0) {			//ADDITION BY WEDUNNIT
+			//Pass the character and current scene to the interrogation script to be used in the interrogation room
+			InterrogationScript.instance.SetInterrogationCharacter (character);
+			Debug.Log (character.getNickname ());
 
-        if (!(GameObject.FindWithTag("local").GetComponent<QuestioningScript>().Isignored(character.getNickname())))
-        {
-            InterrogationScript.instance.SetReturnScene(SceneManager.GetActiveScene().name);
-            SceneManager.LoadScene("Interrogation Room");
-        }  
+			if (!(GameObject.FindWithTag ("local").GetComponent<QuestioningScript> ().Isignored (character.getNickname ()))) {
+				InterrogationScript.instance.SetReturnScene (SceneManager.GetActiveScene ().name);
+				SceneManager.LoadScene ("Interrogation Room");
+			}  
 
-        }
+		}else{
+			print("NOT ENOUGH TURNS TO DO THAT");
+		}
 
     }
+}
             
