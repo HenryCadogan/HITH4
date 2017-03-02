@@ -103,10 +103,10 @@ public class GameMaster : MonoBehaviour {
 
     // floats for the timer
 	private float[] timers = {0f,0f};
-    private bool run_timer = true;
+    private bool run_timer = false;
 
 	//Multiplayer Variables ADDITION BY WEDUNNIT
-	private bool isMultiplayer;
+	public bool isMultiplayer;
 	private const int TURNS_PER_GO = 2;
 	int currentTurns = TURNS_PER_GO;
 	int currentPlayerIndex = 0;
@@ -442,8 +442,9 @@ public class GameMaster : MonoBehaviour {
 
 	private void displayTurns(int currentTurns){	//Displays current turns to the screen if playing multiplayer ADDITION BY WEDUNNIT,
 		if (isMultiplayer) {
-			//GameObject.Find ("Turn Counter").GetComponent<Text> ().text = "Turns remaining: " + currentTurns.ToString ();
-			Debug.Log ("Turns remaining: " + currentTurns.ToString ());
+			if (GameObject.Find ("Turn Counter") != null) {
+				GameObject.Find ("Turn Counter").GetComponent<Text> ().text = "Turns remaining: " + currentTurns.ToString ();
+			}
 		}
 	}
 
@@ -499,8 +500,15 @@ public class GameMaster : MonoBehaviour {
     {
         if (run_timer)
         {
-			timers[currentPlayerIndex] += Time.deltaTime;  // time.deltatime is a built in which uses seconds to indicate when to update values by 1
-           
+			timers[currentPlayerIndex] += Time.deltaTime;  	// time.deltatime is a built in which uses seconds to indicate when to update values by 1
+			for (int i = 0; i<2; i++){							//ADDITION BY WEDUNNIT
+				print(i);
+				string textBoxName = "Player " + (i + 1).ToString() + " Time";				//ADDIITON BY WEDUNNIT
+				string displayedText = textBoxName + ": " + ((int)timers [i]).ToString();	//ADDITION BY WEDUNNIT
+				if (GameObject.Find (textBoxName) != null){									//ADDITION BY WEDUNNIT
+					GameObject.Find (textBoxName).GetComponent<Text>().text = displayedText;	// Updates relevent panel, ADDITION BY WEDUNNIT
+				}
+			}
         }
     }
 
