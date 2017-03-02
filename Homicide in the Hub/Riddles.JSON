@@ -1,0 +1,6 @@
+{"Riddle1" : {
+			"RiddleText" : "Insert Riddle Here",
+			"CorrectAnswer" : "insert correct answer here",
+			"WrongAnswers" : ["insert list of answers here"]
+			}
+}
