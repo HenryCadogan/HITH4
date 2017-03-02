@@ -501,8 +501,7 @@ public class GameMaster : MonoBehaviour {
         if (run_timer)
         {
 			timers[currentPlayerIndex] += Time.deltaTime;  	// time.deltatime is a built in which uses seconds to indicate when to update values by 1
-			for (int i = 0; i<2; i++){							//ADDITION BY WEDUNNIT
-				print(i);
+			for (int i = 0; i<2; i++){							//For both characters, print score each frame ADDITION BY WEDUNNIT
 				string textBoxName = "Player " + (i + 1).ToString() + " Time";				//ADDIITON BY WEDUNNIT
 				string displayedText = textBoxName + ": " + ((int)timers [i]).ToString();	//ADDITION BY WEDUNNIT
 				if (GameObject.Find (textBoxName) != null){									//ADDITION BY WEDUNNIT
