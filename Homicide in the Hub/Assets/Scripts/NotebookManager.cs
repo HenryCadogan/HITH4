@@ -109,7 +109,6 @@ public class NotebookManager : MonoBehaviour {
 				clueDescriptionText.text = clue.getDescription ();
 				clueImage.sprite = questionMark;
 			}
-
 		}
 	}
 

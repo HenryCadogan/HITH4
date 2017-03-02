@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using System.Linq; //Used for take in pick items
+using System.Linq; 		//Used for take in pick items
+using UnityEngine.UI;	//Used for editing text compnents ADDITION BY WEDUNNIT
 
 public class GameMaster : MonoBehaviour {
 	/* Initialises all of the objects required generate the mystery and the game world except the detectives and verbal clues. 
@@ -16,15 +17,15 @@ public class GameMaster : MonoBehaviour {
 	public NonPlayerCharacter[] characters;
 	public List<Clue> relevantClues;
 	private MurderWeapon[] murderWeapons;
-	private PlayerCharacter playerCharacter;
+	private PlayerCharacter[] playerCharacters = new PlayerCharacter[2];	//ADDITION BY WEDUNNIT
 
     // NEW FOR ASSESSMENT 3 - locked room feature  
     public Item keyobj;
     private bool foundkey = false;
 
-//NPC Sprites
-//Made public to allow for dragging and dropping of Sprites
-public Sprite pirateSprite;
+	//NPC Sprites
+	//Made public to allow for dragging and dropping of Sprites
+	public Sprite pirateSprite;
 	public Sprite mimesSprite;
 	public Sprite millionaireSprite;
 	public Sprite cowgirlSprite;
@@ -101,8 +102,15 @@ public Sprite pirateSprite;
 
 
     // floats for the timer
-    private float timer;
-    private bool run_timer = true;
+	private float[] timers = {0f,0f};
+    private bool run_timer = false;
+
+	//Multiplayer Variables ADDITION BY WEDUNNIT
+	public bool isMultiplayer;
+	private const int TURNS_PER_GO = 2;
+	int currentTurns = TURNS_PER_GO;
+	int currentPlayerIndex = 0;
+	int[] collectedClueCount = new int[2];	//used to store collected clue counters used for scoring
 
 	//Sets as a Singleton
 	void Awake () {  //Makes this a singleton class on awake
@@ -307,6 +315,7 @@ public Sprite pirateSprite;
         characters = new NonPlayerCharacter[10] { pirate, mimes, millionaire, cowgirl, roman, wizard, robot, astrogirl, chef, madscientist };
         scenes = new Scene[8] { atrium, lectureTheatre, lakehouse, controlRoom, kitchen, islandOfInteraction, roof, undergroundLab };
         keyobj = key;
+
         
 	}
 
@@ -355,13 +364,14 @@ public Sprite pirateSprite;
         
 	}
 
-	public void CreateNewGame(PlayerCharacter detective){ //Called when the player presses play
+	public void CreateNewGame(PlayerCharacter detective, PlayerCharacter detective2=null, bool isMulti = false){ //Called when the player presses play //UPDATED BY WEDUNNIT
 		//Reset values from a previous playthough
 		ResetNotebook();
 		ResetAll(scenes);
 
 		//Create a Scenario
 		scenario = new Scenario (murderWeapons, itemClues, characters);
+		this.isMultiplayer = isMulti; 	//ADDITON BY WEDUNNIT
 
 		scenario.chooseMotive ();
 		string motive = scenario.getMotive ();
@@ -384,13 +394,29 @@ public Sprite pirateSprite;
 
 		//Assign To rooms
 		AssignNPCsToScenes (characters,scenes);				//Assigns NPCS to scenes
-		AssignItemsToScenes (itemClues,scenes);					//Assigns Items to scenes
-		playerCharacter = detective;	
+		AssignItemsToScenes (itemClues,scenes);				//Assigns Items to scenes
+
+		//Assigns detectives to array. Detective 2 is null if the game is not multiplayer
+		playerCharacters[0] = detective;					//ADDITON BY WEDUNNIT
+		playerCharacters[1] = detective2;					//ADDITON BY WEDUNNIT
 	}	
 		
 
 	public PlayerCharacter GetPlayerCharacter(){
-		return playerCharacter;
+		if ((currentTurns <= 0) && (isMultiplayer)) {		//ADDITION BY WEDUNNIT
+			switchPlayers ();								//ADDITION BY WEDUNNIT
+		}
+		return playerCharacters[currentPlayerIndex];
+	}
+
+	private void displayCharacterChange(){
+		print("Player " + (currentPlayerIndex + 1).ToString() + ", it's your turn!");
+	}
+
+	public void switchPlayers(){							//alternates the current character ADDITION BY WEDUNNIT
+		currentPlayerIndex = 1 - currentPlayerIndex;
+		currentTurns = TURNS_PER_GO;
+		displayCharacterChange ();
 	}
 
 	public Scene GetScene(string sceneName){
@@ -402,13 +428,40 @@ public Sprite pirateSprite;
 		return null;
 	}
 
+	public void clueCollected(){							//method to increment score count each time a clue is collected, used for multiplayer scoring ADDITION BY WEDUNNIT 
+		collectedClueCount [currentPlayerIndex]++;
+		print ("Clues collected by current player: " + collectedClueCount [currentPlayerIndex].ToString());
+	}
+
 	public void ResetAll(Scene[] scenes){
 		foreach (Scene scene in scenes) {
 			scene.ResetScene ();
 		}
 
 	}
-		
+
+	private void displayTurns(int currentTurns){	//Displays current turns to the screen if playing multiplayer ADDITION BY WEDUNNIT,
+		if (isMultiplayer) {
+			if (GameObject.Find ("Turn Counter") != null) {
+				GameObject.Find ("Turn Counter").GetComponent<Text> ().text = "Turns remaining: " + currentTurns.ToString ();
+			}
+		}
+	}
+
+	public int getTurns(){		//ADDITIOM BY WEDUNNIT
+		return currentTurns;
+	}
+
+	/// <summary>
+	/// Uses a turn. ADDITION BY WEDUNNIT
+	/// </summary>
+	/// <returns><c>true</c>, if there are turns left, <c>false</c> otherwise.</returns>
+	public bool useTurn(){
+		currentTurns--;
+		displayTurns (currentTurns);
+		return currentTurns <= 0;
+	}
+
 	public List<Item> GetRelevantItems(){
 		return this.relevant_items;
 	}
@@ -438,17 +491,23 @@ public Sprite pirateSprite;
     {
         run_timer = true;
     }
-    public float get_timer()  // called at the end to calaute teh score based on the time taken 
+    public float get_timer()  // called at the end to calaute the score based on the time taken 
     {
-        return timer;
+		return timers[currentPlayerIndex];
     }
 
     private void Update()  //update function will update the variable timer which holds hte time taken in the game by 1 every second. 
     {
         if (run_timer)
         {
-            timer += Time.deltaTime;  // time.deltatime is a built in which uses seconds to indicate when to update values by 1
-           
+			timers[currentPlayerIndex] += Time.deltaTime;  	// time.deltatime is a built in which uses seconds to indicate when to update values by 1
+			for (int i = 0; i<2; i++){							//For both characters, print score each frame ADDITION BY WEDUNNIT
+				string textBoxName = "Player " + (i + 1).ToString() + " Time";				//ADDIITON BY WEDUNNIT
+				string displayedText = textBoxName + ": " + ((int)timers [i]).ToString();	//ADDITION BY WEDUNNIT
+				if (GameObject.Find (textBoxName) != null){									//ADDITION BY WEDUNNIT
+					GameObject.Find (textBoxName).GetComponent<Text>().text = displayedText;	// Updates relevent panel, ADDITION BY WEDUNNIT
+				}
+			}
         }
     }
 

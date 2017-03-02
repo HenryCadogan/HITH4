@@ -19,6 +19,7 @@ public class Inventory{
 	//Adds the argument item to the inventory
 	public void AddItemToInventory(Item item){
 		inventory.Add (item);
+		GameMaster.instance.clueCollected (); 	//Increments clue count for current player ADDITION BY WEDUNNIT
 	}
 
 

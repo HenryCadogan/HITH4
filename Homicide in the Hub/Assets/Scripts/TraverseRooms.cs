@@ -10,6 +10,7 @@ public class TraverseRooms : MonoBehaviour {
 
 	//When the area on the map is clicked load the respective level
 	void OnMouseDown() {
+		GameMaster.instance.useTurn ();				//ADDITION BY WEDUNNIT
         if (level == "Underground Lab" && GameMaster.instance.iskeyfound()) //NEW FOR ASSESSMENT 3 check if underground lab is being loaded and check if key is found 
         {
             SceneManager.LoadScene(level);  // if so load the underground lab 
