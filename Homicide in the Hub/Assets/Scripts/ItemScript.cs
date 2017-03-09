@@ -12,24 +12,29 @@ public class ItemScript : MonoBehaviour {
 
 	//Called when the item is clicked on 
 	void OnMouseDown(){
-		//Adds the item to the inventory, updates the notebook and destroys the item gameobject.
-		NotebookManager.instance.inventory.AddItemToInventory (item);
-		NotebookManager.instance.UpdateNotebook();
+		if (GameMaster.instance.getTurns () > 0) {			//ADDITION BY WEDUNNIT
+			//Adds the item to the inventory, updates the notebook and destroys the item gameobject.
+			NotebookManager.instance.inventory.AddItemToInventory (item);
+			NotebookManager.instance.UpdateNotebook ();
 
-        // ADDED FOR ASSESSMENT 3 - Key //
-        GameObject.FindWithTag("local").GetComponent<QuestioningScript>().UnignoreNPC();//npc is now ignored
-        if (item.getID() == "Key")
-        {
-            GameMaster.instance.foundKey();
-        }
-        
-        //Plays mysterious sfx by adding audio source to the local scripts game object (an instance is present in every scene), and playing the sound
-		GameObject.Find ("Local Scripts").AddComponent<AudioSource> ();							//ADDITION BY WEDUNNIT
-		GameObject.Find ("Local Scripts").GetComponent<AudioSource> ().clip = Resources.Load<AudioClip> ("Sounds/mysterious-sfx"); //ADDITION BY WEDUNNIT
-		GameObject.Find ("Local Scripts").GetComponent<AudioSource> ().Play ();					//ADDITION BY WEDUNNIT
-        
+			// ADDED FOR ASSESSMENT 3 - Key //
+			GameObject.FindWithTag ("local").GetComponent<QuestioningScript> ().UnignoreNPC ();//npc is now ignored
+			if (item.getID () == "Key") {
+				GameMaster.instance.foundKey ();
+			}
+	        
+			GameMaster.instance.useTurn ();	//ADDITION BY WEDUNNIT
 
-        Destroy (gameObject);
+			//Plays mysterious sfx by adding audio source to the local scripts game object (an instance is present in every scene), and playing the sound
+			GameObject.Find ("Local Scripts").AddComponent<AudioSource> ();							//ADDITION BY WEDUNNIT
+			GameObject.Find ("Local Scripts").GetComponent<AudioSource> ().clip = Resources.Load<AudioClip> ("Sounds/mysterious-sfx"); //ADDITION BY WEDUNNIT
+			GameObject.Find ("Local Scripts").GetComponent<AudioSource> ().Play ();					//ADDITION BY WEDUNNIT
+	        
+
+			Destroy (gameObject);
+		} else {				//ADDITION BY WEDUNNIT
+			print ("SORRY PLAYER I CAN'T LET YOU DO THAT");
+		}
        
 
 	}

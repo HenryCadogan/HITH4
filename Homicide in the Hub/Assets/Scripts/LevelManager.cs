@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class LevelManager : MonoBehaviour {
 	//One LevelManager per level
@@ -32,6 +33,16 @@ public class LevelManager : MonoBehaviour {
 		Scene scene = GameMaster.instance.GetScene(sceneName);
 		AssignCharactersToSpawnPoints (scene);
 		AssignItemsToSpawnPoints (scene);
+
+
+		//Multiplayer considerations //ALL ADDITIONS BY WEDUNNIT
+		if (!GameMaster.instance.isMultiplayer) {
+			GameObject.Find ("Actions Panel").SetActive (false);
+			GameObject.Find ("Time Panel 2").SetActive (false);
+		}else{
+			GameObject.Find("Turn Counter").GetComponent<Text>().text = "Actions remaining: " + GameMaster.instance.getTurns().ToString();
+		}
+		GameMaster.instance.set_timer ();	//turns timer on to not include the menu time
 	}
 
 	//Spawns characters in character spawnpoints
@@ -70,10 +81,6 @@ public class LevelManager : MonoBehaviour {
             prefab.transform.localScale *= itemScaling;        // set it to the rihgt scale 
             ItemScript itemscript = prefab.GetComponent<ItemScript>();    //collect the correct script to attach 
             itemscript.SetItem(scene.getKey());  // set the key to the spwanpoint
-        
-             
-
-
         }
 	}
 }
