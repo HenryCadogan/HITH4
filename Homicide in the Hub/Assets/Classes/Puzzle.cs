@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using Assets.Classes;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 /// <summary>
@@ -17,6 +18,7 @@ public class Puzzle
     private List<GameObject> answerButtons;
     private GameObject riddleTextObject;
 
+    public GameObject panel;
 
 
     //used for determining if the correct button has been pressed
@@ -28,14 +30,11 @@ public class Puzzle
         answerButtons = new List<GameObject>();
         riddleTextObject = GameObject.Find("RiddleText");
         LoadJSON();
-        foreach (GameObject button in GameObject.FindGameObjectsWithTag("RiddleButton"))
-        {
-            answerButtons.Add(button);
-        }
+
+
         //set riddle text to be the loaded in riddle
-        GameObject.Find("RiddleText").GetComponent<Text>().text = riddleText;
+
         //assign answers to buttons
-        AssignAnswers();
     }
 
     private void LoadJSON(){
@@ -54,27 +53,12 @@ public class Puzzle
             wrongAnswers.Add(line.str);
         }
 
-        /* debugs for JSON Loading
+        // debugs for JSON Loading
         Debug.Log(riddleText);
         Debug.Log(correctAnswer);
-        Debug.Log(wrongAnswers.ToString());
-        */
-
-}
-
-    //todo catch invalid amount of wrong answers in the JSON as this will cause indexing to fail.
-    private void AssignAnswers(){
-        correctIndex = Random.Range(0, 2);
-        for (int x = 0; x <= 2; x++)
-        {
-            if (x == correctIndex)
-            {
-                answerButtons[x].GetComponent<Text>().text = correctAnswer;
-            }
-            //todo clean this up (read: make it nice)
-            answerButtons[x].GetComponent<Text>().text = wrongAnswers[0];
-        }
+        Debug.Log(wrongAnswers[0]);
     }
+
 
     public string GetCorrectAnwer(){
         return correctAnswer;
@@ -84,15 +68,11 @@ public class Puzzle
         return riddleText;
     }
 
-    public void IsCorrect(int index){
-        if (index == correctIndex)
-        {
-            //todo scene transition to the locked room
-        }
-        else
-        {
-            //todo transition into any other room/the room the character was in.
-        }
+    public List<string> GetWrongAnswers()
+    {
+        return wrongAnswers;
     }
+
+
 
 }

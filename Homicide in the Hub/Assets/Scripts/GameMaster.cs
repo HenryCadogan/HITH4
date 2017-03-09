@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Security.Policy;
+using UnityEngine.SceneManagement;
 //Used for take in pick items
 using UnityEngine.UI;
 using UnityTest;
@@ -373,6 +374,7 @@ public class GameMaster : MonoBehaviour {
 
         //Set locked room index
         lockedRoomIndex = Random.Range(4, 11);
+        Debug.Log("Locked room is: " + SceneManager.GetSceneByBuildIndex(lockedRoomIndex).name);
 
     }
 
@@ -557,7 +559,7 @@ public class GameMaster : MonoBehaviour {
 				string textBoxName = "Player " + (i + 1).ToString() + " Time";				//ADDIITON BY WEDUNNIT
 				string displayedText = textBoxName + ": " + ((int)timers [i]).ToString();	//ADDITION BY WEDUNNIT
 				if (GameObject.Find (textBoxName) != null){									//ADDITION BY WEDUNNIT
-					GameObject.Find (textBoxName).GetComponent<Text>().text = displayedText;	// Updates relevent panel, ADDITION BY WEDUNNIT
+					GameObject.Find (textBoxName).GetComponent<Text>().text = displayedText;	// Updates relevent buttonPanel, ADDITION BY WEDUNNIT
 				}
 			}
         }

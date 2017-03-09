@@ -11,14 +11,16 @@ public class TraverseRooms : MonoBehaviour {
 	//When the area on the map is clicked load the respective level
 	void OnMouseDown() {
 		GameMaster.instance.useTurn ();				//ADDITION BY WEDUNNIT
-        if (level == "Underground Lab" && GameMaster.instance.iskeyfound()) //NEW FOR ASSESSMENT 3 check if underground lab is being loaded and check if key is found 
+
+	    //todo make the locked room random and make make sure they can only enter it when they should
+        if (level == SceneManager.GetSceneByBuildIndex(GameMaster.instance.getLockedRoomIndex()).name && GameMaster.instance.hasPassedRiddle()) //NEW FOR ASSESSMENT 3 check if underground lab is being loaded and check if key is found
         {
             SceneManager.LoadScene(level);  // if so load the underground lab 
-        } else if(level == "Underground Lab" && !GameMaster.instance.iskeyfound())  // if no key has been found do not load the room
+        } else if(level == SceneManager.GetSceneByBuildIndex(GameMaster.instance.getLockedRoomIndex()).name && !GameMaster.instance.hasPassedRiddle())  // if no key has been found do not load the room
         {
-
         } else
         {
+            GameMaster.instance.setPreviousRoom(SceneManager.GetActiveScene().buildIndex);
             SceneManager.LoadScene(level);
         }
 
