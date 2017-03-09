@@ -16,6 +16,7 @@ public class LevelManager : MonoBehaviour {
 	public GameObject[] characterSpawnPoints;
 	public GameObject[] itemSpawnPoints;
     public GameObject keyspwanpoint;
+	public GameObject SwitchPanel;	//ADDITION BY WEDUNNIT
 
 	//Used to change the scaling of characters and items per room
 	public float characterScaling = 1;
@@ -57,7 +58,12 @@ public class LevelManager : MonoBehaviour {
 				characterInteraction.SetCharacter (character);				//Tells the prefab which character it is
 			}
 		}
+	}
 
+	public void displayCharacterChange(){									//ADDITION BY WEDUNNIT
+		SwitchPanel.SetActive (true);
+		SwitchPanel.transform.FindChild ("Text2").GetComponent<Text> ().text = "It's now player " + (GameMaster.instance.getCurrentPlayerIndex() + 1) + "'s turn.";
+		GameObject.Find ("Detective").SetActive (false);
 	}
 
 	//Spawns items in item spawnpoints
