@@ -1,7 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using System.Linq; 		//Used for take in pick items
-using UnityEngine.UI;	//Used for editing text compnents ADDITION BY WEDUNNIT
+using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Security.Policy;
+//Used for take in pick items
+using UnityEngine.UI;
+using UnityTest;
+
+//Used for editing text compnents ADDITION BY WEDUNNIT
 
 public class GameMaster : MonoBehaviour {
 	/* Initialises all of the objects required generate the mystery and the game world except the detectives and verbal clues. 
@@ -22,6 +28,8 @@ public class GameMaster : MonoBehaviour {
     // NEW FOR ASSESSMENT 3 - locked room feature  
     public Item keyobj;
     private bool foundkey = false;
+
+
 
 	//NPC Sprites
 	//Made public to allow for dragging and dropping of Sprites
@@ -96,6 +104,12 @@ public class GameMaster : MonoBehaviour {
     public GameObject keyPrefab;
 
 	private NonPlayerCharacter murderer;
+    //Arrays for riddle room
+
+    private int lockedRoomIndex;
+    private bool[] playerHasPassedRiddle = new bool[2];
+    private int[] playerPreviousRoom = new int[2];
+
 	//Relevant Clues
 	private List<Item> relevant_items;
 	private List<VerbalClue> relevant_verbal_clues;
@@ -123,10 +137,12 @@ public class GameMaster : MonoBehaviour {
 	}
 
 
-    void Start() {
+    void Start()
+    {
         //Initialises Variables
         //Responce Arrays
-        string[] pirateResponses = new string[9] {
+        string[] pirateResponses = new string[9]
+        {
             "Shiver me timbers I know nothing!",
             "Arrr matey it ain’t that difficult to understand.",
             "Shiver me timbers, how dare ye threaten me!",
@@ -138,7 +154,8 @@ public class GameMaster : MonoBehaviour {
             "Arrr matey I don’t think ye need my help to solve this conundrum."
         };
 
-        string[] mimeResponses = new string[9] {
+        string[] mimeResponses = new string[9]
+        {
             "The mimes are taken aback, but contribute nothing more.",
             "The mimes shake their heads.",
             "The mimes flinch, but tell you nothing.",
@@ -150,7 +167,8 @@ public class GameMaster : MonoBehaviour {
             "The mimes shake their heads. They tell you nothing."
         };
 
-        string[] millionaireResponses = new string[9] {
+        string[] millionaireResponses = new string[9]
+        {
             "Don’t try and force me to tell you anything. I’ve got more money than you.",
             "Don’t patronise me you cretin. I’ve got more money than you.",
             "How dare you threaten me you lunatic, I’ve got more money than you.",
@@ -162,7 +180,8 @@ public class GameMaster : MonoBehaviour {
             "My good man, you don’t need my help to solve this. Not to mention there’s no money involved."
         };
 
-        string[] cowgirlResponses = new string[9] {
+        string[] cowgirlResponses = new string[9]
+        {
             "I appreciate your candour pardner but I didn’t see anything.",
             "Pardner I do understand, I just didn’t see anything.",
             "Pardner I don’t appreciate threats so don’t try it.",
@@ -174,7 +193,8 @@ public class GameMaster : MonoBehaviour {
             "Pardner, you’ll have to solve this one without my help, I didn’t see anything."
         };
 
-        string[] romanResponses = new string[9] {
+        string[] romanResponses = new string[9]
+        {
             "What Ho! I understand you want to solve the problem but I saw nothing!",
             "What Ho! Yes I understand, but I saw nothing!",
             "What Ho! Don’t try and threaten me you madman!",
@@ -186,7 +206,8 @@ public class GameMaster : MonoBehaviour {
             "What Ho!  My good man I’m sorry but I saw nothing."
         };
 
-        string[] wizardResponses = new string[9] {
+        string[] wizardResponses = new string[9]
+        {
             "Errrm...are you sure I can’t interest you in some merchandise instead?",
             "Errrm...I do understand what is going on, I just didn’t see anything.",
             "Errrm...I think you might need to calm down, I’ve got something for that.",
@@ -198,9 +219,10 @@ public class GameMaster : MonoBehaviour {
             "Errrm...are you sure? I’m not that useful really."
         };
 
-        // NEW FOR ASSSESSMENT 3 - REPOSNES FOR ADDING NEW NPCS 
+        // NEW FOR ASSSESSMENT 3 - REPOSNES FOR ADDING NEW NPCS
 
-        string[] astrogirlResponses = new string[9] {
+        string[] astrogirlResponses = new string[9]
+        {
             "Hah, as if you can force me to say anything incriminating, earthling!",
             "Hey, careful. You don't know who you're talking to!",
             "Okay, friend, you ain't fooling anyone with that scary attitude!",
@@ -212,7 +234,8 @@ public class GameMaster : MonoBehaviour {
             "Hey, you know more than me about this, so you clearly don't need my help."
         };
 
-        string[] chefRepsonses = new string[9] {
+        string[] chefRepsonses = new string[9]
+        {
             "Sacré bleu! You are very rude, monsieur detective!",
             "How dare you patronise me, monsieur! I am the best Chef in the world!",
             "Oh! No need for this, my friend! I have not seen one thing!",
@@ -224,7 +247,8 @@ public class GameMaster : MonoBehaviour {
             "What did you say, monsieur? Would you like to taste this freshly baked baguette?"
         };
 
-        string[] madscientistRepsonses = new string[9] {
+        string[] madscientistRepsonses = new string[9]
+        {
             "Do you know who you are talking to! Watch your language, peasant!",
             "This patronising attitude of yours is annoying, I don't know anything that would interest you!",
             "Hahaha, as if someone like you could intimidate someone like me!",
@@ -236,7 +260,8 @@ public class GameMaster : MonoBehaviour {
             "Very inspiring, but I have no interest in solving this murder."
         };
 
-        string[] robotResponses = new string[9] {
+        string[] robotResponses = new string[9]
+        {
             "Goodness me! I am not programmed to answer to this kind of attitude, beep boop.",
             "Don't you dare patronise me, you mean glob of grease! Beep boop.",
             "Oh my, you are scary… I don't know anything, unfortunately. Beep boop.",
@@ -248,35 +273,45 @@ public class GameMaster : MonoBehaviour {
             "I'm sorry, detective, but there's nothing that I can do to help you. I'm sure you'll manage on your own."
         };
 
-        // NEW FOR ASSESSEMNT 3 - IGNORE 
+        // NEW FOR ASSESSEMNT 3 - IGNORE
         NonPlayerCharacter[] ignoredNPCs = new NonPlayerCharacter[6];
 
         //Weaknesses
-        List<string> pirateWeaknesses = new List<string> { "Forceful", "Wisecracking", "Kind" };
-        List<string> mimeWeaknesses = new List<string> { "Intimidating", "Coaxing", "Inspiring" };
-        List<string> millionaireWeaknesses = new List<string> { "Forceful", "Rushed", "Kind" };
-        List<string> cowgirlWeaknesses = new List<string> { "Condescending", "Wisecracking", "Inspiring" };
-        List<string> romanWeaknesses = new List<string> { "Condescending", "Coaxing", "Inquisitive" };
-        List<string> wizardWeaknesses = new List<string> { "Intimidating", "Rushed", "Inquisitive" };
-        List<string> robotWeaknesses = new List<string> { "Intimidating", "Coaxing", "Kind" };
-        List<string> astrogirlWeaknesses = new List<string> { "Forceful", "Wisecracking", "Inspiring" };
-        List<string> chefWeaknesses = new List<string> { "Condescending", "Coaxing", "Inquisitie" };
-        List<string> madscientistWeaknesses = new List<string> { "Forceful", "Rushed", "Kind" };
+        List<string> pirateWeaknesses = new List<string> {"Forceful", "Wisecracking", "Kind"};
+        List<string> mimeWeaknesses = new List<string> {"Intimidating", "Coaxing", "Inspiring"};
+        List<string> millionaireWeaknesses = new List<string> {"Forceful", "Rushed", "Kind"};
+        List<string> cowgirlWeaknesses = new List<string> {"Condescending", "Wisecracking", "Inspiring"};
+        List<string> romanWeaknesses = new List<string> {"Condescending", "Coaxing", "Inquisitive"};
+        List<string> wizardWeaknesses = new List<string> {"Intimidating", "Rushed", "Inquisitive"};
+        List<string> robotWeaknesses = new List<string> {"Intimidating", "Coaxing", "Kind"};
+        List<string> astrogirlWeaknesses = new List<string> {"Forceful", "Wisecracking", "Inspiring"};
+        List<string> chefWeaknesses = new List<string> {"Condescending", "Coaxing", "Inquisitie"};
+        List<string> madscientistWeaknesses = new List<string> {"Forceful", "Rushed", "Kind"};
 
 
         //Defining NPC's
-        NonPlayerCharacter pirate = new NonPlayerCharacter("Captain Bluebottle", pirateSprite, "Salty Seadog", piratePref, pirateWeaknesses, pirateResponses);
-        NonPlayerCharacter mimes = new NonPlayerCharacter("The Mime Twins", mimesSprite, "mimes", mimesPref, mimeWeaknesses, mimeResponses);
-        NonPlayerCharacter millionaire = new NonPlayerCharacter("Sir Worchester", millionaireSprite, "Money Bags", millionarePref, millionaireWeaknesses, millionaireResponses);
-        NonPlayerCharacter cowgirl = new NonPlayerCharacter("Jesse Ranger", cowgirlSprite, "Outlaw", cowgirlPref, cowgirlWeaknesses, cowgirlResponses);
-        NonPlayerCharacter roman = new NonPlayerCharacter("Celcius Maximus", romanSprite, "Legionnaire", romanPref, romanWeaknesses, romanResponses);
-        NonPlayerCharacter wizard = new NonPlayerCharacter("Randolf the Deep Purple", wizardSprite, "Dodgy Dealer", wizardPref, wizardWeaknesses, wizardResponses);
+        NonPlayerCharacter pirate = new NonPlayerCharacter("Captain Bluebottle", pirateSprite, "Salty Seadog",
+            piratePref, pirateWeaknesses, pirateResponses);
+        NonPlayerCharacter mimes = new NonPlayerCharacter("The Mime Twins", mimesSprite, "mimes", mimesPref,
+            mimeWeaknesses, mimeResponses);
+        NonPlayerCharacter millionaire = new NonPlayerCharacter("Sir Worchester", millionaireSprite, "Money Bags",
+            millionarePref, millionaireWeaknesses, millionaireResponses);
+        NonPlayerCharacter cowgirl = new NonPlayerCharacter("Jesse Ranger", cowgirlSprite, "Outlaw", cowgirlPref,
+            cowgirlWeaknesses, cowgirlResponses);
+        NonPlayerCharacter roman = new NonPlayerCharacter("Celcius Maximus", romanSprite, "Legionnaire", romanPref,
+            romanWeaknesses, romanResponses);
+        NonPlayerCharacter wizard = new NonPlayerCharacter("Randolf the Deep Purple", wizardSprite, "Dodgy Dealer",
+            wizardPref, wizardWeaknesses, wizardResponses);
 
         // NEW FOR ASSESSMETN 3 - ADDING NEW NPCS //
-        NonPlayerCharacter robot = new NonPlayerCharacter("Droid Mayweather", robotSprite, "Mean Machine", robotPref, robotWeaknesses, robotResponses);
-        NonPlayerCharacter astrogirl = new NonPlayerCharacter("Astrigirl", astrogirlSprite, "Spacegirl", astrogirlPref, astrogirlWeaknesses, astrogirlResponses);
-        NonPlayerCharacter chef = new NonPlayerCharacter("Philip Mingot", chefSprite, "The Gastronomer", chefPref, chefWeaknesses, chefRepsonses);
-        NonPlayerCharacter madscientist = new NonPlayerCharacter("Professor Bon Vose", madscientistSprite, "Dr. Evil", madscientistPref, madscientistWeaknesses, madscientistRepsonses);
+        NonPlayerCharacter robot = new NonPlayerCharacter("Droid Mayweather", robotSprite, "Mean Machine", robotPref,
+            robotWeaknesses, robotResponses);
+        NonPlayerCharacter astrogirl = new NonPlayerCharacter("Astrigirl", astrogirlSprite, "Spacegirl", astrogirlPref,
+            astrogirlWeaknesses, astrogirlResponses);
+        NonPlayerCharacter chef = new NonPlayerCharacter("Philip Mingot", chefSprite, "The Gastronomer", chefPref,
+            chefWeaknesses, chefRepsonses);
+        NonPlayerCharacter madscientist = new NonPlayerCharacter("Professor Bon Vose", madscientistSprite, "Dr. Evil",
+            madscientistPref, madscientistWeaknesses, madscientistRepsonses);
 
         //Defining Scenes
         Scene controlRoom = new Scene("Control Room");
@@ -289,41 +324,59 @@ public class GameMaster : MonoBehaviour {
         Scene undergroundLab = new Scene("Underground Lab");
 
         //Defining Items
-        MurderWeapon cutlass = new MurderWeapon(cutlassPrefab, "Cutlass", "A worn and well used cutlass", cutlassSprite, "SD");
-        MurderWeapon poison = new MurderWeapon(poisonPrefab, "Empty Poison Bottle", "An empty poison bottle ", poisonSprite, "SD");
-        MurderWeapon garrote = new MurderWeapon(garrotePrefab, "Garrote", "Used for strangling a victim to death", garroteSprite, "SD");
-        MurderWeapon knife = new MurderWeapon(knifePrefab, "Knife", "An incredibly sharp tool meant for cutting meat", knifeSprite, "SD");
-        MurderWeapon laserGun = new MurderWeapon(laserGunPrefab, "Laser Gun", "It's still warm which implies it has been recently fired", laserGunSprite, "SD");
-        MurderWeapon leadPipe = new MurderWeapon(leadPipePrefab, "Lead Pipe", "It's a bit battered with a few dents on the side", leadPipeSprite, "SD");
-        MurderWeapon westernPistol = new MurderWeapon(westernPistolPrefab, "Western Pistol", "The gunpowder residue implies it has been recently fired", westernPistolSprite, "SD");
-        MurderWeapon wizardStaff = new MurderWeapon(wizardStaffPrefab, "Wizard Staff", "The gems still seem to be glow as if it has been used recently", wizardStaffSprite, "SD");
+        MurderWeapon cutlass = new MurderWeapon(cutlassPrefab, "Cutlass", "A worn and well used cutlass", cutlassSprite,
+            "SD");
+        MurderWeapon poison = new MurderWeapon(poisonPrefab, "Empty Poison Bottle", "An empty poison bottle ",
+            poisonSprite, "SD");
+        MurderWeapon garrote = new MurderWeapon(garrotePrefab, "Garrote", "Used for strangling a victim to death",
+            garroteSprite, "SD");
+        MurderWeapon knife = new MurderWeapon(knifePrefab, "Knife", "An incredibly sharp tool meant for cutting meat",
+            knifeSprite, "SD");
+        MurderWeapon laserGun = new MurderWeapon(laserGunPrefab, "Laser Gun",
+            "It's still warm which implies it has been recently fired", laserGunSprite, "SD");
+        MurderWeapon leadPipe = new MurderWeapon(leadPipePrefab, "Lead Pipe",
+            "It's a bit battered with a few dents on the side", leadPipeSprite, "SD");
+        MurderWeapon westernPistol = new MurderWeapon(westernPistolPrefab, "Western Pistol",
+            "The gunpowder residue implies it has been recently fired", westernPistolSprite, "SD");
+        MurderWeapon wizardStaff = new MurderWeapon(wizardStaffPrefab, "Wizard Staff",
+            "The gems still seem to be glow as if it has been used recently", wizardStaffSprite, "SD");
         Item beret = new Item(beretPrefab, "Beret", "A hat most stereotypically worn by the French", beretSprite);
-        Item footprints = new Item(footprintsPrefab, "Bloody Footprints", "Bloody footprints most likely left by the murderer", footprintsSprite);
-        Item gloves = new Item(glovesPrefab, "Bloody Gloves", "Bloody gloves most likely used by the murderer", glovesSprite);
+        Item footprints = new Item(footprintsPrefab, "Bloody Footprints",
+            "Bloody footprints most likely left by the murderer", footprintsSprite);
+        Item gloves = new Item(glovesPrefab, "Bloody Gloves", "Bloody gloves most likely used by the murderer",
+            glovesSprite);
         Item wine = new Item(winePrefab, "Fine Wine", "An expensive vintage that's close to 100 years old", wineSprite);
-        Item shatteredGlass = new Item(shatteredGlassPrefab, "Shattered Glass", "Broken glass shards spread quite close together", shatteredGlassSprite);
-        Item shrapnel = new Item(shrapnelPrefab, "Shrapnel", "Shrapnel from an explosion or gun being fired", shrapnelSprite);
-        Item smellyDeath = new Item(smellyDeathPrefab, "Smelly Death", "All that remains of the victim", smellyDeathSprite);
-        Item spellbook = new Item(spellbookPrefab, "Spellbook", "A spellbook used by those who practise in the magic arts", spellbookSprite);
-        Item tripwire = new Item(tripwirePrefab, "Tripwire", "A used tripwire most likely used to immobilize the victim", tripwireSprite);
+        Item shatteredGlass = new Item(shatteredGlassPrefab, "Shattered Glass",
+            "Broken glass shards spread quite close together", shatteredGlassSprite);
+        Item shrapnel = new Item(shrapnelPrefab, "Shrapnel", "Shrapnel from an explosion or gun being fired",
+            shrapnelSprite);
+        Item smellyDeath = new Item(smellyDeathPrefab, "Smelly Death", "All that remains of the victim",
+            smellyDeathSprite);
+        Item spellbook = new Item(spellbookPrefab, "Spellbook",
+            "A spellbook used by those who practise in the magic arts", spellbookSprite);
+        Item tripwire = new Item(tripwirePrefab, "Tripwire",
+            "A used tripwire most likely used to immobilize the victim", tripwireSprite);
 
         // NEW FOR ASSESSMENT 3 - LOCKED ROOM FEATURE
         Item key = new Item(keyPrefab, "Key", "Key has the words underground lab on it", keySprite);
 
-        murderWeapons = new MurderWeapon[8] { cutlass, poison, garrote, knife, laserGun, leadPipe, westernPistol, wizardStaff };
-        itemClues = new Item[9] { beret, footprints, gloves, wine, shatteredGlass, shrapnel, smellyDeath, spellbook, tripwire };
-        characters = new NonPlayerCharacter[10] { pirate, mimes, millionaire, cowgirl, roman, wizard, robot, astrogirl, chef, madscientist };
-        scenes = new Scene[8] { atrium, lectureTheatre, lakehouse, controlRoom, kitchen, islandOfInteraction, roof, undergroundLab };
+        murderWeapons = new MurderWeapon[8]
+            {cutlass, poison, garrote, knife, laserGun, leadPipe, westernPistol, wizardStaff};
+        itemClues = new Item[9]
+            {beret, footprints, gloves, wine, shatteredGlass, shrapnel, smellyDeath, spellbook, tripwire};
+        characters = new NonPlayerCharacter[10]
+            {pirate, mimes, millionaire, cowgirl, roman, wizard, robot, astrogirl, chef, madscientist};
+        scenes = new Scene[8]
+            {atrium, lectureTheatre, lakehouse, controlRoom, kitchen, islandOfInteraction, roof, undergroundLab};
         keyobj = key;
 
-        
-	}
 
-   
+        //Set locked room index
+        lockedRoomIndex = Random.Range(4, 11);
 
-    
+    }
 
-	void AssignNPCsToScenes(NonPlayerCharacter[] characters, Scene[] scenes){
+    void AssignNPCsToScenes(NonPlayerCharacter[] characters, Scene[] scenes){
 		int sceneCounter = 0;
 		Shuffler shuffler = new Shuffler ();
 		shuffler.Shuffle (characters);
@@ -511,15 +564,32 @@ public class GameMaster : MonoBehaviour {
         }
     }
 
-    // NEW FOR ASSSESSMENT 3 - LOCKED ROOM FEATURE 
-    public void foundKey()   // sets the foundkey variable to true once the key has been found by the player 
+    // NEW FOR ASSSESSMENT 3 - LOCKED ROOM FEATURE
+    // KEY IS BEING REPLACED BY RIDDLE FOR ASSESSMENT 4
+    public bool hasPassedRiddle()
     {
-        foundkey = true;
+        return playerHasPassedRiddle[currentPlayerIndex];
     }
 
-    public bool iskeyfound()   // a procdure which can be called as a predicate ot test whether the key has been found by the player so far 
+    public void passRiddle()
     {
-        return foundkey;
+        playerHasPassedRiddle[currentPlayerIndex] = true;
     }
+
+    public int getPreviousRoom()
+    {
+        return playerPreviousRoom[currentPlayerIndex];
+    }
+
+    public void setPreviousRoom(int roomIndex)
+    {
+        playerPreviousRoom[currentPlayerIndex] = roomIndex;
+    }
+
+    public int getLockedRoomIndex()
+    {
+        return lockedRoomIndex;
+    }
+
 
 }

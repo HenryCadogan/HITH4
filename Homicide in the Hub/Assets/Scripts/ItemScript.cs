@@ -18,10 +18,8 @@ public class ItemScript : MonoBehaviour {
 			NotebookManager.instance.UpdateNotebook ();
 
 			// ADDED FOR ASSESSMENT 3 - Key //
-			GameObject.FindWithTag ("local").GetComponent<QuestioningScript> ().UnignoreNPC ();//npc is now ignored
-			if (item.getID () == "Key") {
-				GameMaster.instance.foundKey ();
-			}
+			GameObject.FindWithTag ("local").GetComponent<QuestioningScript> ().UnignoreNPC ();//npc is now unignored
+			
 	        
 			GameMaster.instance.useTurn ();	//ADDITION BY WEDUNNIT
 
