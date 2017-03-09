@@ -18,6 +18,7 @@ public class GameOver : MonoBehaviour {
 	/// The text object that contains the player's score.
 	/// </summary>
 	public Text p2scoreText;
+	public Text spscoreText;
 	/// <summary>
 	/// The text object that the player writes their name to.
 	/// </summary>
@@ -26,6 +27,7 @@ public class GameOver : MonoBehaviour {
 	/// The text object that the player writes their name to.
 	/// </summary>
 	public Text p2nameField;
+	public Text spnameField;
 	/// <summary>
 	/// The final score of the player.
 	/// </summary>
@@ -34,11 +36,32 @@ public class GameOver : MonoBehaviour {
 	/// The final score of the player.
 	/// </summary>
 	private int p2Score;
+	public GameObject p1Hud;
+	public GameObject p2Hud;
 
 	/// <summary>
 	/// Initialise this instance.
 	/// </summary>
 	void Start () {
+		bool isMP = GameMaster.instance.isMultiplayer;
+		if (isMP) {
+			P1Start ();
+		} else {
+			P2Start ();
+		}
+	}
+	void P1Start(){
+		p1Hud.SetActive (true);
+		GameMaster gMaster = FindObjectOfType<GameMaster> ();	// Find the current Game Master object
+		p1Score = gMaster.GetP1Score ();
+		Text spText = spscoreText.GetComponent<Text> ();		// Get the text component of the text box...
+		spText.text = "Your final score score: " + p1Score;
+		Destroy(GameObject.Find("GlobalScripts")); // As we no longer need the GlobalScripts and NotebookCanvas objects...
+		Destroy(GameObject.Find("NotebookCanvas")); // We can now get rid of them.
+	}
+
+	void P2Start(){
+		p2Hud.SetActive (true);
 		GameMaster gMaster = FindObjectOfType<GameMaster> ();	// Find the current Game Master object
 		p1Score = gMaster.GetP1Score ();							// Get the player's score
 		p2Score = gMaster.GetP2Score();
@@ -50,17 +73,35 @@ public class GameOver : MonoBehaviour {
 		Destroy(GameObject.Find("NotebookCanvas")); // We can now get rid of them.
 	}
 
+	public void P1CloseScreen(){
+		string spInput = p1nameField.text;			// Fetch the user's name from the field.
+		if (spInput == "") {						// If it's blank, assign it a dummy value.
+			spInput = "Some Unnamed Detective";
+		}
+		using (StreamWriter sw = new StreamWriter ("leaderboard.txt", true)) {
+			sw.WriteLine (spInput);				// Write the name and score to leaderboard.txt.
+			sw.WriteLine (p1Score.ToString ());
+		}
+		SceneManager.LoadScene ("Main Menu");		// Then return to main menu.
+	}
+
 	/// <summary>
 	/// Closes the screen and returns to the main menu.
 	/// </summary>
-	public void CloseScreen(){
-		string UserInput = nameField.text;			// Fetch the user's name from the field.
-		if (UserInput == "") {						// If it's blank, assign it a dummy value.
-			UserInput = "Some Unnamed Detective";
+	public void P2CloseScreen(){
+		string p1Input = p1nameField.text;			// Fetch the user's name from the field.
+		if (p1Input == "") {						// If it's blank, assign it a dummy value.
+			p1Input = "Some Unnamed Detective";
+		}
+		string p2Input = p1nameField.text;			// Fetch the user's name from the field.
+		if (p2Input == "") {						// If it's blank, assign it a dummy value.
+			p2Input = "Some Unnamed Detective";
 		}
 		using (StreamWriter sw = new StreamWriter ("leaderboard.txt", true)) {
-			sw.WriteLine (UserInput);				// Write the name and score to leaderboard.txt.
-			sw.WriteLine (endScore.ToString ());
+			sw.WriteLine (p1Input);				// Write the name and score to leaderboard.txt.
+			sw.WriteLine (p1Score.ToString ());
+			sw.WriteLine (p2Input);
+			sw.WriteLine (p2Score.ToString());
 		}
 		SceneManager.LoadScene ("Main Menu");		// Then return to main menu.
 	}

@@ -84,11 +84,14 @@ public class AccuseScript : MonoBehaviour {
 			SceneManager.LoadScene ("Win Screen");
 		} else {
 			//If not go to the lose screen 
+
+			//TODO make this not shit
 			notebookMenu.SetActive (false);
 			verbal.SetActive (true);
-            GameMaster.instance.stop_timer();
-            SceneManager.LoadScene("Lose Screen");
-
+			verbalText.text = "You don't have enough evidence to accuse me of murder!";
+			GameMaster.instance.TakePoints (200);
+			ButtonScript bs = FindObjectOfType<ButtonScript> ();
+			bs.back ();
 		}
 	}
 
