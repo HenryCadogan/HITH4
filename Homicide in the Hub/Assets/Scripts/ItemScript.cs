@@ -12,7 +12,7 @@ public class ItemScript : MonoBehaviour {
 
 	//Called when the item is clicked on 
 	void OnMouseDown(){
-		if (GameMaster.instance.getTurns () > 0) {			//ADDITION BY WEDUNNIT
+		if (GameMaster.instance.getTurns () > 0 || !GameMaster.instance.isMultiplayer) {			//ADDITION BY WEDUNNIT
 			//Adds the item to the inventory, updates the notebook and destroys the item gameobject.
 			NotebookManager.instance.inventory.AddItemToInventory (item);
 			NotebookManager.instance.UpdateNotebook ();

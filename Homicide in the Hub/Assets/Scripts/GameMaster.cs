@@ -453,7 +453,12 @@ public class GameMaster : MonoBehaviour {
 		playerCharacters[0] = detective;					//ADDITON BY WEDUNNIT
 		playerCharacters[1] = detective2;					//ADDITON BY WEDUNNIT
 	}	
-		
+
+	public void switchPlayers(){							//alternates the current character ADDITION BY WEDUNNIT
+		currentPlayerIndex = 1 - currentPlayerIndex;
+		currentTurns = TURNS_PER_GO;
+		GameObject.Find("Local Scripts").GetComponent<LevelManager> ().displayCharacterChange();
+	}
 
 	public PlayerCharacter GetPlayerCharacter(){
 		if ((currentTurns <= 0) && (isMultiplayer)) {		//ADDITION BY WEDUNNIT
@@ -462,14 +467,8 @@ public class GameMaster : MonoBehaviour {
 		return playerCharacters[currentPlayerIndex];
 	}
 
-	private void displayCharacterChange(){
-		print("Player " + (currentPlayerIndex + 1).ToString() + ", it's your turn!");
-	}
-
-	public void switchPlayers(){							//alternates the current character ADDITION BY WEDUNNIT
-		currentPlayerIndex = 1 - currentPlayerIndex;
-		currentTurns = TURNS_PER_GO;
-		displayCharacterChange ();
+	public int getCurrentPlayerIndex(){						//ADDITION BY WEDUNNIT
+		return currentPlayerIndex;
 	}
 
 	public Scene GetScene(string sceneName){
