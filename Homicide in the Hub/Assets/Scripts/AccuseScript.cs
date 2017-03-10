@@ -80,6 +80,7 @@ public class AccuseScript : MonoBehaviour {
 		if ((accusation == true) && (character.IsMurderer ())) {
 			//If so go to win screen
 			notebookMenu.SetActive (false);
+			GameMaster.instance.GivePoints (250); //TODO: Change this?
             GameMaster.instance.stop_timer();  // stop the timer when the player wins
 			SceneManager.LoadScene ("Win Screen");
 		} else {

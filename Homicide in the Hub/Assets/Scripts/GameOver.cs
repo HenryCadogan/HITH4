@@ -45,15 +45,15 @@ public class GameOver : MonoBehaviour {
 	void Start () {
 		bool isMP = GameMaster.instance.isMultiplayer;
 		if (isMP) {
-			P1Start ();
-		} else {
 			P2Start ();
+		} else {
+			P1Start ();
 		}
 	}
 	void P1Start(){
 		p1Hud.SetActive (true);
 		GameMaster gMaster = FindObjectOfType<GameMaster> ();	// Find the current Game Master object
-		p1Score = gMaster.GetP1Score ();
+		p1Score = gMaster.GetScore (0);
 		Text spText = spscoreText.GetComponent<Text> ();		// Get the text component of the text box...
 		spText.text = "Your final score score: " + p1Score;
 		Destroy(GameObject.Find("GlobalScripts")); // As we no longer need the GlobalScripts and NotebookCanvas objects...
@@ -63,8 +63,8 @@ public class GameOver : MonoBehaviour {
 	void P2Start(){
 		p2Hud.SetActive (true);
 		GameMaster gMaster = FindObjectOfType<GameMaster> ();	// Find the current Game Master object
-		p1Score = gMaster.GetP1Score ();							// Get the player's score
-		p2Score = gMaster.GetP2Score();
+		p1Score = gMaster.GetScore (0);							// Get the player's score
+		p2Score = gMaster.GetScore(1);
 		Text p1Text = p1scoreText.GetComponent<Text> ();		// Get the text component of the text box...
 		p1Text.text = "Player 1's score: " + p1Score;
 		Text p2Text = p2scoreText.GetComponent<Text> ();		// Get the text component of the text box...
@@ -74,7 +74,7 @@ public class GameOver : MonoBehaviour {
 	}
 
 	public void P1CloseScreen(){
-		string spInput = p1nameField.text;			// Fetch the user's name from the field.
+		string spInput = spnameField.text;			// Fetch the user's name from the field.
 		if (spInput == "") {						// If it's blank, assign it a dummy value.
 			spInput = "Some Unnamed Detective";
 		}
@@ -93,7 +93,7 @@ public class GameOver : MonoBehaviour {
 		if (p1Input == "") {						// If it's blank, assign it a dummy value.
 			p1Input = "Some Unnamed Detective";
 		}
-		string p2Input = p1nameField.text;			// Fetch the user's name from the field.
+		string p2Input = p2nameField.text;			// Fetch the user's name from the field.
 		if (p2Input == "") {						// If it's blank, assign it a dummy value.
 			p2Input = "Some Unnamed Detective";
 		}
