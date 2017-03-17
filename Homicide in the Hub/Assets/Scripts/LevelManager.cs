@@ -15,7 +15,6 @@ public class LevelManager : MonoBehaviour {
 	private SpriteRenderer playerSpriteRenderer;
 	public GameObject[] characterSpawnPoints;
 	public GameObject[] itemSpawnPoints;
-    public GameObject keyspwanpoint;
 	public GameObject SwitchPanel;	//ADDITION BY WEDUNNIT
 
 	//Used to change the scaling of characters and items per room
