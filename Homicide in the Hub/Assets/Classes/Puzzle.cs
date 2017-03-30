@@ -1,11 +1,8 @@
-﻿using System.Collections;
+﻿
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Assets.Classes;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 /// <summary>
 /// Class to be instantiated everytime a new puzzle is to be solved. The puzzle will load in the text from a JSON file each instance.
@@ -17,9 +14,8 @@ public class Puzzle
     private List<string> wrongAnswers;
     private List<GameObject> answerButtons;
     private GameObject riddleTextObject;
-
+    private System.Random random = new System.Random();
     public GameObject panel;
-
 
     //used for determining if the correct button has been pressed
     private int correctIndex;
@@ -30,11 +26,6 @@ public class Puzzle
         answerButtons = new List<GameObject>();
         riddleTextObject = GameObject.Find("RiddleText");
         LoadJSON();
-
-
-        //set riddle text to be the loaded in riddle
-
-        //assign answers to buttons
     }
 
     private void LoadJSON(){
@@ -52,11 +43,13 @@ public class Puzzle
         {
             wrongAnswers.Add(line.str);
         }
+        ShuffleWrongAnswers();
 
-        // debugs for JSON Loading
+        /* debugs for JSON Loading
         Debug.Log(riddleText);
         Debug.Log(correctAnswer);
         Debug.Log(wrongAnswers[0]);
+        */
     }
 
 
@@ -73,6 +66,9 @@ public class Puzzle
         return wrongAnswers;
     }
 
-
+    //shuffle wrong answers so they arent always on the same buttons in the riddle
+    private void ShuffleWrongAnswers(){
+        wrongAnswers.OrderBy(x => random.Next());
+    }
 
 }

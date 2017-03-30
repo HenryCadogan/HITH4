@@ -1,6 +1,58 @@
-{"Riddle1" : {
-			"RiddleText" : "Insert Riddle Here!",
-			"CorrectAnswer" : "insert correct answer here",
-			"WrongAnswers" : ["insert list of answers here"]
-			}
+{"MoneyBags" : {
+			"RiddleText" : "Money Bags has 4 daughters. Each of the daughters has a brother. How many children does Money Bags have?",
+			"CorrectAnswer" : "5",
+			"WrongAnswers" : ["4","7","8"]
+			},
+"Box" : {
+			"RiddleText" : "A box without hinges, key, or lid. Yet golden treasure inside is hid. What is it?",
+			"CorrectAnswer" : "Egg",
+			"WrongAnswers" : ["Skull","Jukebox","Toilet"]
+			},
+"Ghosts" : {
+			"RiddleText" : "What room do ghosts avoid?",
+			"CorrectAnswer" : "The living room",
+			"WrongAnswers" : ["The Kitchen","The Bathroom","The Bedroom"]
+			},
+"Belonging" : {
+			"RiddleText" : "What belongs to you, but other people use it more than you?",
+			"CorrectAnswer" : "Your Name",
+			"WrongAnswers" : ["Your Shadow","Your Money","Your Phone"]
+			},
+"Lightness" : {
+			"RiddleText" : "I weigh nothing, but you can still see me. Put me In a bucket and I make it lighter?",
+			"CorrectAnswer" : "A Hole",
+			"WrongAnswers" : ["John Cena","A Feather","A Light"]
+			},
+"WhatAmI" : {
+			"RiddleText" : "You have me today, Tomorrow you'll have more; As your time passes, I'm not easy to store; I don't take up space, But I'm only in one place; I am what you saw, But not what you see, What am I?",
+			"CorrectAnswer" : "Memories",
+			"WrongAnswers" : ["Knowlege","Money","Strength"]
+			},
+"HoldOn" : {
+			"RiddleText" : "I am as light as a feather, but the strongest man cannot hold me for long.",
+			"CorrectAnswer" : "Breath",
+			"WrongAnswers" : ["The Sun","A Feather","Money"]
+			},
+"UpUpUp" : {
+			"RiddleText" : "I always go up and never come down.",
+			"CorrectAnswer" : "Age",
+			"WrongAnswers" : ["A Balloon","A Bird","A Spaceship"]
+			},
+"Lettuce" : {
+			"RiddleText" : "Lighter than what I'm made of, I hide more of myself than you can see. What am I?",
+			"CorrectAnswer" : "An Iceberg",
+			"WrongAnswers" : ["A Black Hole","A Beard","A Mirror"]
+			},
+"Cold" : {
+			"RiddleText" : "Glittering points downward thrust, Sparkling spears that do not rust.",
+			"CorrectAnswer" : "An Icicle",
+			"WrongAnswers" : ["An Arrow","A Tree","Stainless Steel Spears"]
+			},
+"Holes" : {
+			"RiddleText" : "I have holes in my top and bottom, my left and right, and my middle. But still I hold water. What am I?",
+			"CorrectAnswer" : "Sponge",
+			"WrongAnswers" : ["A Person","Communism","A Plant Pot"]
+			},
+
+			
 }
