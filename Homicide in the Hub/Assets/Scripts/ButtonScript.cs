@@ -29,7 +29,7 @@ public class ButtonScript : MonoBehaviour {
         //Loads the previously stored scene in InterrogationScript.
         string previousScene = InterrogationScript.instance.GetReturnScene();
         SceneManager.LoadScene(previousScene);
-		GameMaster.instance.useTurn ();					//ADDITION BY WEDUNNIT
+		GameMaster.instance.UseTurn ();					//ADDITION BY WEDUNNIT
     }
 
 	public void IgnoreNPC()

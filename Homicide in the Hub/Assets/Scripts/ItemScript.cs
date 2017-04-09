@@ -12,17 +12,17 @@ public class ItemScript : MonoBehaviour {
 
 	//Called when the item is clicked on 
 	void OnMouseDown(){
-		if (GameMaster.instance.getTurns () > 0 || !GameMaster.instance.isMultiplayer) {			//ADDITION BY WEDUNNIT
+		if (GameMaster.instance.GetTurns () > 0 || !GameMaster.instance.isMultiplayer) {			//ADDITION BY WEDUNNIT
 			//Adds the item to the inventory, updates the notebook and destroys the item gameobject.
 			NotebookManager.instance.inventory.AddItemToInventory (item);
-		    GameMaster.instance.clueCollected (); 	                                                //Increments clue count for current player ADDITION BY WEDUNNIT
+		    GameMaster.instance.ClueCollected (); 	                                                //Increments clue count for current player ADDITION BY WEDUNNIT
 			NotebookManager.instance.UpdateNotebook ();
 
 			// ADDED FOR ASSESSMENT 3 - Key //
 			GameObject.FindWithTag ("local").GetComponent<QuestioningScript> ().UnignoreNPC ();//npc is now unignored
 			
 	        
-			GameMaster.instance.useTurn ();	//ADDITION BY WEDUNNIT
+			GameMaster.instance.UseTurn ();	//ADDITION BY WEDUNNIT
 
 			//Plays mysterious sfx by adding audio source to the local scripts game object (an instance is present in every scene), and playing the sound
 			GameObject.Find ("Local Scripts").AddComponent<AudioSource> ();							//ADDITION BY WEDUNNIT

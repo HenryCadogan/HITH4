@@ -1,30 +1,33 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Runtime.InteropServices;
 using UnityEngine.SceneManagement;
 
 public class TraverseRooms : MonoBehaviour {
 	//Used on the map to load the appropriate level.
 	//Placed on the child objects of the map defining the hitboxes (Polygon Collider 2D) 
 
-	public string level;	//Public to allow for changing in inspector.
+    public string level;
+    public int buildIndex;
 
 	//When the area on the map is clicked load the respective level
 	void OnMouseDown() {
-		GameMaster.instance.useTurn ();				//ADDITION BY WEDUNNIT
+		GameMaster.instance.UseTurn ();				//ADDITION BY WEDUNNIT
+        print("Trying to traverse to" + level);
 
-	    //todo make the locked room random and make make sure they can only enter it when they should
-        if (level == SceneManager.GetSceneByBuildIndex(GameMaster.instance.getLockedRoomIndex()).name && GameMaster.instance.hasPassedRiddle()) //NEW FOR ASSESSMENT 3 check if underground lab is being loaded and check if key is found
+	    print("Player has passed riddle:" + GameMaster.instance.HasPassedRiddle());
+
+        if (buildIndex == GameMaster.instance.GetLockedRoomIndex() && GameMaster.instance.HasPassedRiddle()) //NEW FOR ASSESSMENT 3 check if underground lab is being loaded and check if key is found
         {
-            SceneManager.LoadScene(level);  // if so load the underground lab 
-        } else if(level == SceneManager.GetSceneByBuildIndex(GameMaster.instance.getLockedRoomIndex()).name && !GameMaster.instance.hasPassedRiddle())  // if no key has been found do not load the room
+            SceneManager.LoadScene(level);
+        } else if(buildIndex == GameMaster.instance.GetLockedRoomIndex() && !GameMaster.instance.HasPassedRiddle())  // if riddle has not been passed load riddle room
         {
-        } else
-        {
-            GameMaster.instance.setPreviousRoom(SceneManager.GetActiveScene().buildIndex);
+            GameMaster.instance.SetPreviousRoom(SceneManager.GetActiveScene().buildIndex);
+            SceneManager.LoadScene(16); //loads the riddle scene
+        } else{
+            //set the current room to the previous room and then go to new room
+            GameMaster.instance.SetPreviousRoom(SceneManager.GetActiveScene().buildIndex);
             SceneManager.LoadScene(level);
         }
-
- 
-		
 	}
 }

@@ -13,7 +13,7 @@ public class PuzzleScript : MonoBehaviour
     public Puzzle puzzle;
     private int correctIndex;
     private List<GameObject> answerButtons;
-
+    public AudioSource celebrationSound, booSound;
 
     // Use this for initialization
     void Start()
@@ -49,12 +49,14 @@ public class PuzzleScript : MonoBehaviour
     public void IsCorrect(int index){
         if (index == correctIndex){
             //go into the locked room
+            celebrationSound.Play();
             GameMaster.instance.GetPlayerCharacter().unlockPuzzle();
-            SceneManager.LoadScene(GameMaster.instance.getLockedRoomIndex());
+            SceneManager.LoadScene(GameMaster.instance.GetLockedRoomIndex());
         }else{
+            booSound.Play();
             //use up a turn and return the user to the previous room they were in
-            GameMaster.instance.useTurn();
-            SceneManager.LoadScene(GameMaster.instance.getPreviousRoom());
+            GameMaster.instance.UseTurn();
+            SceneManager.LoadScene(GameMaster.instance.GetPreviousRoom());
         }
     }
 

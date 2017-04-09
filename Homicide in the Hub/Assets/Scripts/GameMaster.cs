@@ -1,12 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Security.Policy;
 using UnityEngine.SceneManagement;
-//Used for take in pick items
 using UnityEngine.UI;
-using UnityTest;
+
 
 //Used for editing text compnents ADDITION BY WEDUNNIT
 
@@ -17,7 +13,7 @@ public class GameMaster : MonoBehaviour {
 	public Scenario scenario; 
 
 	//Arrays 
-	public static GameMaster instance = null;
+	public static GameMaster instance;
 	static public Scene[] scenes;
 	public Item[] itemClues;
 	public VerbalClue[] verbalClues;
@@ -26,11 +22,9 @@ public class GameMaster : MonoBehaviour {
 	private MurderWeapon[] murderWeapons;
 	private PlayerCharacter[] playerCharacters = new PlayerCharacter[2];	//ADDITION BY WEDUNNIT
 
-    // NEW FOR ASSESSMENT 3 - locked room feature  
+    // NEW FOR ASSESSMENT 3 - locked room feature
     public Item keyobj;
     private bool foundkey = false;
-
-
 
 	//NPC Sprites
 	//Made public to allow for dragging and dropping of Sprites
@@ -371,11 +365,9 @@ public class GameMaster : MonoBehaviour {
             {atrium, lectureTheatre, lakehouse, controlRoom, kitchen, islandOfInteraction, roof, undergroundLab};
         keyobj = key;
 
-
         //Set locked room index
-        lockedRoomIndex = Random.Range(4, 11);
-        Debug.Log("Locked room is: " + SceneManager.GetSceneByBuildIndex(lockedRoomIndex).name);
-
+        lockedRoomIndex = Random.Range(5, 11);
+        Debug.Log("Locked room is: " + SceneManager.GetSceneByBuildIndex(lockedRoomIndex).name + "At Build index: " + lockedRoomIndex);
     }
 
     void AssignNPCsToScenes(NonPlayerCharacter[] characters, Scene[] scenes){
@@ -393,7 +385,6 @@ public class GameMaster : MonoBehaviour {
 				sceneCounter = 0;
 			}
 		}
-
 	}
 
 	void AssignItemsToScenes(Item[] items, Scene[] scenes) {
@@ -409,15 +400,7 @@ public class GameMaster : MonoBehaviour {
             }
             // NEW FOR ASSESSMENT 3 - LOCKED ROOM 
         }
-        int room = Random.Range(0, 7);                            // pick a random number between 0 and 7 to reference the rooms
-        while (scenes[room].GetName() == "Underground Lab")      // ensure that the room selscted isn't the underground lab 
-        {
-            room = Random.Range(0, 7);    
-        }
-
-        scenes[room].setKey(keyobj);     // using the reference to that room get it from the scenes list and set the key to that room. 
-        
-	}
+    }
 
 	public void CreateNewGame(PlayerCharacter detective, PlayerCharacter detective2=null, bool isMulti = false){ //Called when the player presses play //UPDATED BY WEDUNNIT
 		//Reset values from a previous playthough
@@ -426,7 +409,7 @@ public class GameMaster : MonoBehaviour {
 
 		//Create a Scenario
 		scenario = new Scenario (murderWeapons, itemClues, characters);
-		this.isMultiplayer = isMulti; 	//ADDITON BY WEDUNNIT
+		isMultiplayer = isMulti; 	//ADDITON BY WEDUNNIT
 
 		scenario.chooseMotive ();
 		string motive = scenario.getMotive ();
@@ -456,33 +439,33 @@ public class GameMaster : MonoBehaviour {
 		playerCharacters[1] = detective2;					//ADDITON BY WEDUNNIT
 	}	
 
-	public void switchPlayers(){							//alternates the current character ADDITION BY WEDUNNIT
+	public void SwitchPlayers(){							//alternates the current character ADDITION BY WEDUNNIT
 		currentPlayerIndex = 1 - currentPlayerIndex;
 		currentTurns = TURNS_PER_GO;
-		GameObject.Find("Local Scripts").GetComponent<LevelManager> ().displayCharacterChange();
+		GameObject.Find("Local Scripts").GetComponent<LevelManager> ().DisplayCharacterChange();
 	}
 
 	public PlayerCharacter GetPlayerCharacter(){
-		if ((currentTurns <= 0) && (isMultiplayer)) {		//ADDITION BY WEDUNNIT
-			switchPlayers ();								//ADDITION BY WEDUNNIT
+		if (currentTurns <= 0 && isMultiplayer) {		//ADDITION BY WEDUNNIT
+			SwitchPlayers ();								//ADDITION BY WEDUNNIT
 		}
 		return playerCharacters[currentPlayerIndex];
 	}
 
-	public int getCurrentPlayerIndex(){						//ADDITION BY WEDUNNIT
+	public int GetCurrentPlayerIndex(){						//ADDITION BY WEDUNNIT
 		return currentPlayerIndex;
 	}
 
 	public Scene GetScene(string sceneName){
-		for (int i = 0; i < scenes.Length; i++) {
-			if (scenes [i].GetName () == sceneName) {
-				return scenes [i];
-			} 
-		}
-		return null;
+	    foreach (Scene scene in scenes){
+	        if (scene.GetName () == sceneName) {
+	            return scene;
+	        }
+	    }
+	    return null;
 	}
 
-	public void clueCollected(){							//method to increment score count each time a clue is collected, used for multiplayer scoring ADDITION BY WEDUNNIT 
+	public void ClueCollected(){							//method to increment score count each time a clue is collected, used for multiplayer scoring ADDITION BY WEDUNNIT
 		collectedClueCount [currentPlayerIndex]++;
 		print ("Clues collected by current player: " + collectedClueCount [currentPlayerIndex].ToString());
 	}
@@ -494,15 +477,15 @@ public class GameMaster : MonoBehaviour {
 
 	}
 
-	private void displayTurns(int currentTurns){	//Displays current turns to the screen if playing multiplayer ADDITION BY WEDUNNIT,
+	private void DisplayTurns(int currentTurns){	//Displays current turns to the screen if playing multiplayer ADDITION BY WEDUNNIT,
 		if (isMultiplayer) {
 			if (GameObject.Find ("Turn Counter") != null) {
-				GameObject.Find ("Turn Counter").GetComponent<Text> ().text = "Turns remaining: " + currentTurns.ToString ();
+				GameObject.Find ("Turn Counter").GetComponent<Text> ().text = "Turns remaining: " + currentTurns;
 			}
 		}
 	}
 
-	public int getTurns(){		//ADDITIOM BY WEDUNNIT
+	public int GetTurns(){		//ADDITIOM BY WEDUNNIT
 		return currentTurns;
 	}
 
@@ -510,22 +493,22 @@ public class GameMaster : MonoBehaviour {
 	/// Uses a turn. ADDITION BY WEDUNNIT
 	/// </summary>
 	/// <returns><c>true</c>, if there are turns left, <c>false</c> otherwise.</returns>
-	public bool useTurn(){
+	public bool UseTurn(){
 		currentTurns--;
-		displayTurns (currentTurns);
+		DisplayTurns (currentTurns);
 		return currentTurns <= 0;
 	}
 
 	public List<Item> GetRelevantItems(){
-		return this.relevant_items;
+		return relevant_items;
 	}
 
 	public List<VerbalClue> GetRelevantVerbalClues(){
-		return this.relevant_verbal_clues;
+		return relevant_verbal_clues;
 	}
 
 	public string GetMurderer(){
-		return this.murderer.getCharacterID();
+		return murderer.getCharacterID();
 	}
 
 	private void ResetNotebook(){
@@ -550,14 +533,13 @@ public class GameMaster : MonoBehaviour {
 		return timers[currentPlayerIndex];
     }
 
-    private void Update()  //update function will update the variable timer which holds hte time taken in the game by 1 every second. 
-    {
-        if (run_timer)
-        {
+    //update function will update the variable timer which holds the time taken in the game by 1 every second.
+    private void Update(){
+        if (run_timer){
 			timers[currentPlayerIndex] += Time.deltaTime;  	// time.deltatime is a built in which uses seconds to indicate when to update values by 1
 			for (int i = 0; i<2; i++){							//For both characters, print score each frame ADDITION BY WEDUNNIT
-				string textBoxName = "Player " + (i + 1).ToString() + " Time";				//ADDIITON BY WEDUNNIT
-				string displayedText = textBoxName + ": " + ((int)timers [i]).ToString();	//ADDITION BY WEDUNNIT
+				string textBoxName = "Player " + (i + 1)+ " Time";				//ADDIITON BY WEDUNNIT
+				string displayedText = textBoxName + ": " + ((int)timers [i]);	//ADDITION BY WEDUNNIT
 				if (GameObject.Find (textBoxName) != null){									//ADDITION BY WEDUNNIT
 					GameObject.Find (textBoxName).GetComponent<Text>().text = displayedText;	// Updates relevent buttonPanel, ADDITION BY WEDUNNIT
 				}
@@ -567,30 +549,30 @@ public class GameMaster : MonoBehaviour {
 
     // NEW FOR ASSSESSMENT 3 - LOCKED ROOM FEATURE
     // KEY IS BEING REPLACED BY RIDDLE FOR ASSESSMENT 4
-    public bool hasPassedRiddle()
-    {
+
+    //THE FOLLOWING ARE ADDITIONS BY WEDUNNIT
+    //checks if the current player has passed the riddle in this instance of the game
+    public bool HasPassedRiddle(){
         return playerHasPassedRiddle[currentPlayerIndex];
     }
 
-    public void passRiddle()
-    {
+    //The current player has passed the riddle
+    public void PassRiddle(){
         playerHasPassedRiddle[currentPlayerIndex] = true;
     }
 
-    public int getPreviousRoom()
-    {
+    //returns the index of the last room that the player was in, incase they fail the riddle
+    public int GetPreviousRoom(){
         return playerPreviousRoom[currentPlayerIndex];
     }
 
-    public void setPreviousRoom(int roomIndex)
-    {
+    //sets the current room to be the last room the player was in when they traverse to another room
+    public void SetPreviousRoom(int roomIndex){
         playerPreviousRoom[currentPlayerIndex] = roomIndex;
     }
-
-    public int getLockedRoomIndex()
-    {
+    //returns the integer index of the locked room for which the riddle has to be passed in order to enter
+    public int GetLockedRoomIndex(){
         return lockedRoomIndex;
     }
-
 
 }

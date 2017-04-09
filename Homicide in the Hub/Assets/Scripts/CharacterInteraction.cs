@@ -16,7 +16,7 @@ public class CharacterInteraction : MonoBehaviour {
 
 	//When the character is clicked on
 	void OnMouseDown() {
-		if (GameMaster.instance.getTurns () > 0 || !GameMaster.instance.isMultiplayer) {			//ADDITION BY WEDUNNIT
+		if (GameMaster.instance.GetTurns () > 0 || !GameMaster.instance.isMultiplayer) {			//ADDITION BY WEDUNNIT
 			//Pass the character and current scene to the interrogation script to be used in the interrogation room
 			InterrogationScript.instance.SetInterrogationCharacter (character);
 			Debug.Log (character.getNickname ());
