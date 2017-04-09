@@ -10,20 +10,15 @@ public class Inventory{
 	//Define the inventory as a list items
 	private List<Item> inventory = new List<Item> ();
 
-	//__Constructor__
-	public Inventory (){
-	}
-
 
 	//__Operations__
 	//Adds the argument item to the inventory
-	public void AddItemToInventory(Item item){
-		inventory.Add (item);
-		GameMaster.instance.clueCollected (); 	//Increments clue count for current player ADDITION BY WEDUNNIT
-	}
+    public void AddItemToInventory(Item item){
+        inventory.Add(item);
+    }
 
 
-	//Mainly used when starting a new game
+    //Mainly used when starting a new game
 	public void Reset(){
 		this.inventory.Clear ();
 	}

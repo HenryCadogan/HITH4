@@ -15,6 +15,7 @@ public class ItemScript : MonoBehaviour {
 		if (GameMaster.instance.getTurns () > 0 || !GameMaster.instance.isMultiplayer) {			//ADDITION BY WEDUNNIT
 			//Adds the item to the inventory, updates the notebook and destroys the item gameobject.
 			NotebookManager.instance.inventory.AddItemToInventory (item);
+		    GameMaster.instance.clueCollected (); 	                                                //Increments clue count for current player ADDITION BY WEDUNNIT
 			NotebookManager.instance.UpdateNotebook ();
 
 			// ADDED FOR ASSESSMENT 3 - Key //

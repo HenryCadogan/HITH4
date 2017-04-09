@@ -3,16 +3,17 @@ using UnityEditor;
 using NUnit.Framework;
 using UnityEngine.UI;
 
-public class LeaderboardTests {
+public class LeaderboardTests{
+    private Leaderboard leaderboard;
 
-	[Test]
-	public void LeaderbaordResetpoistion1Test()
+    [TestFixtureSetUp]
+    public void LeaderboardSetup(){
+        leaderboard = new Leaderboard();
+    }
+
+    [Test]
+	public void LeaderboardResetpoistion1Test()
 	{
-		//Arrange
-		Leaderboard leaderboard = new Leaderboard();
-
-        //Act
-        // reset all of the leaderbaord scores to 0
         leaderboard.resetscores();
 		
 		//Assert
@@ -21,12 +22,9 @@ public class LeaderboardTests {
 	}
 
     [Test]
-    public void LeaderbaordResetpoistion2Test()
+    public void LeaderboardResetpoistion2Test()
     {
-        //Arrange
-        Leaderboard leaderboard = new Leaderboard();
-
-        //Act
+       //Act
         // reset all of the leaderbaord scores to 0
         leaderboard.resetscores();
 
@@ -36,11 +34,8 @@ public class LeaderboardTests {
     }
 
     [Test]
-    public void LeaderbaordResetpoistion3Test()
+    public void LeaderboardrdResetpoistion3Test()
     {
-        //Arrange
-        Leaderboard leaderboard = new Leaderboard();
-
         //Act
         // reset all of the leaderbaord scores to 0
         leaderboard.resetscores();
