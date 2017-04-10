@@ -28,7 +28,9 @@ public class ItemScript : MonoBehaviour {
 			GameObject.Find ("Local Scripts").GetComponent<AudioSource> ().clip = Resources.Load<AudioClip> ("Sounds/mysterious-sfx"); //ADDITION BY WEDUNNIT
 			GameObject.Find ("Local Scripts").GetComponent<AudioSource> ().Play ();					//ADDITION BY WEDUNNIT
 
-			GameMaster.instance.UseTurn ();	//ADDITION BY WEDUNNIT
+			if (GameMaster.instance.UseTurn () && GameMaster.instance.isMultiplayer) {	//reduces turns & changes scenes if turns expire ADDITION BY WEDUNNIT
+				GameMaster.instance.SwitchPlayers();
+			};	
 
 			Destroy (gameObject);
 		} else {				//ADDITION BY WEDUNNIT
