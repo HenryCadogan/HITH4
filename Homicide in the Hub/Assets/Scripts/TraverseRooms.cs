@@ -20,14 +20,15 @@ public class TraverseRooms : MonoBehaviour {
         if (buildIndex == GameMaster.instance.GetLockedRoomIndex() && GameMaster.instance.HasPassedRiddle()) //NEW FOR ASSESSMENT 3 check if underground lab is being loaded and check if key is found
         {
             SceneManager.LoadScene(level);
-        } else if(buildIndex == GameMaster.instance.GetLockedRoomIndex() && !GameMaster.instance.HasPassedRiddle())  // if riddle has not been passed load riddle room
+        } else if(buildIndex == GameMaster.instance.GetLockedRoomIndex() && !GameMaster.instance.HasPassedRiddle())  // if riddle has not been passed load riddle room BY WEDUNNIT
         {
             GameMaster.instance.SetPreviousRoom(SceneManager.GetActiveScene().buildIndex);
             SceneManager.LoadScene(16); //loads the riddle scene
         } else{
             //set the current room to the previous room and then go to new room
             GameMaster.instance.SetPreviousRoom(SceneManager.GetActiveScene().buildIndex);
-            SceneManager.LoadScene(level);
+			GameMaster.instance.LoadRoom (level);	//Updates current room for players in case of player switch when new room is loaded BY WEDUNNIT
+			SceneManager.LoadScene(level);
         }
 	}
 }

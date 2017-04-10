@@ -21,14 +21,14 @@ public class ItemScript : MonoBehaviour {
 			// ADDED FOR ASSESSMENT 3 - Key //
 			GameObject.FindWithTag ("local").GetComponent<QuestioningScript> ().UnignoreNPC ();//npc is now unignored
 			
-	        
-			GameMaster.instance.UseTurn ();	//ADDITION BY WEDUNNIT
+
 
 			//Plays mysterious sfx by adding audio source to the local scripts game object (an instance is present in every scene), and playing the sound
 			GameObject.Find ("Local Scripts").AddComponent<AudioSource> ();							//ADDITION BY WEDUNNIT
 			GameObject.Find ("Local Scripts").GetComponent<AudioSource> ().clip = Resources.Load<AudioClip> ("Sounds/mysterious-sfx"); //ADDITION BY WEDUNNIT
 			GameObject.Find ("Local Scripts").GetComponent<AudioSource> ().Play ();					//ADDITION BY WEDUNNIT
-	        
+
+			GameMaster.instance.UseTurn ();	//ADDITION BY WEDUNNIT
 
 			Destroy (gameObject);
 		} else {				//ADDITION BY WEDUNNIT

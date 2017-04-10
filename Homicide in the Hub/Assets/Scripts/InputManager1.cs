@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class InputManager1 : MonoBehaviour {
 	//Handles the input keys 'I' and 'M' pause menu and the map and notebook icons
@@ -94,5 +95,12 @@ public class InputManager1 : MonoBehaviour {
 	public void NotebookIconPressed(){
 		//Called when Notepad icon is pressed
 		notebookIconPressed = true;
+	}
+
+	/// <summary>
+	/// Loads the other detective's scene when the 'Okay' button pressed from the switch prompt.
+	/// </summary>
+	public void SwitchDetectivesButtonPressed(){
+		SceneManager.LoadScene (GameMaster.instance.playerCurrentRoom[GameMaster.instance.GetCurrentPlayerIndex()]);
 	}
 }

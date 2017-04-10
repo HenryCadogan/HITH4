@@ -99,8 +99,8 @@ public class GameMaster : MonoBehaviour {
     public GameObject keyPrefab;
 
 	private NonPlayerCharacter murderer;
-    //Arrays for riddle room
-
+    
+	//Arrays for riddle room 		BY WEDUNNIT
     private int lockedRoomIndex;
     private bool[] playerHasPassedRiddle = new bool[2];
     private int[] playerPreviousRoom = new int[2];
@@ -119,7 +119,8 @@ public class GameMaster : MonoBehaviour {
 	private const int TURNS_PER_GO = 2;
 	int currentTurns = TURNS_PER_GO;
 	int currentPlayerIndex = 0;
-	int[] collectedClueCount = new int[2];	//used to store collected clue counters used for scoring
+	int[] collectedClueCount = new int[2];	//stores collected clue counters used for scoring
+	public string[] playerCurrentRoom = new string[2] {"Atrium","Atrium"}; 	//stores room occupied by each player for when detectives switch
 
 	//Sets as a Singleton
 	void Awake () {  //Makes this a singleton class on awake
@@ -439,7 +440,7 @@ public class GameMaster : MonoBehaviour {
 		playerCharacters[1] = detective2;					//ADDITON BY WEDUNNIT
 	}	
 
-	public void SwitchPlayers(){							//alternates the current character ADDITION BY WEDUNNIT
+	public void SwitchPlayers(){							//alternates the current character & switches to their room ADDITION BY WEDUNNIT
 		currentPlayerIndex = 1 - currentPlayerIndex;
 		currentTurns = TURNS_PER_GO;
 		GameObject.Find("Local Scripts").GetComponent<LevelManager> ().DisplayCharacterChange();
@@ -565,6 +566,14 @@ public class GameMaster : MonoBehaviour {
     public int GetPreviousRoom(){
         return playerPreviousRoom[currentPlayerIndex];
     }
+
+	/// <summary>
+	/// Stores currently loaded room for each player
+	/// </summary>
+	/// <param name="buildIndex">Build index.</param>
+	public void LoadRoom(string level){	//BY WEDUNNIT
+		this.playerCurrentRoom[currentPlayerIndex] = level;
+	}
 
     //sets the current room to be the last room the player was in when they traverse to another room
     public void SetPreviousRoom(int roomIndex){
