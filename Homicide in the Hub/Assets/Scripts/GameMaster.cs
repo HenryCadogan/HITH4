@@ -102,6 +102,7 @@ public class GameMaster : MonoBehaviour {
     
 	//Arrays for riddle room 		BY WEDUNNIT
     private int lockedRoomIndex;
+	private string lockedRoomName;
     private bool[] playerHasPassedRiddle = new bool[2];
     private int[] playerPreviousRoom = new int[2];
 
@@ -121,6 +122,9 @@ public class GameMaster : MonoBehaviour {
 	int currentPlayerIndex = 0;
 	int[] collectedClueCount = new int[2];	//stores collected clue counters used for scoring
 	public string[] playerCurrentRoom = new string[2] {"Atrium","Atrium"}; 	//stores room occupied by each player for when detectives switch
+
+	//Score variables
+	private float[] ScoreArray;
 
 	//Sets as a Singleton
 	void Awake () {  //Makes this a singleton class on awake
@@ -365,11 +369,45 @@ public class GameMaster : MonoBehaviour {
         scenes = new Scene[8]
             {atrium, lectureTheatre, lakehouse, controlRoom, kitchen, islandOfInteraction, roof, undergroundLab};
         keyobj = key;
-
         //Set locked room index
         lockedRoomIndex = Random.Range(5, 11);
         Debug.Log("Locked room is: " + SceneManager.GetSceneByBuildIndex(lockedRoomIndex).name + "At Build index: " + lockedRoomIndex);
     }
+
+	public int GetScore(int playerIndex){
+		return (int)ScoreArray [playerIndex];
+	}
+
+	public void GivePoints(float points, int playerIndex){
+		//TODO: assert
+		ScoreArray[playerIndex] += points;
+	}
+
+	public void TakePoints(float points, int playerIndex){
+		//TODO: assert
+		ScoreArray[playerIndex] -= points;
+	}
+
+	public void GivePoints(float points){
+		//TODO: assert
+		ScoreArray[currentPlayerIndex] += points;
+	}
+
+	public void TakePoints(float points){
+		//TODO: assert
+		ScoreArray[currentPlayerIndex] -= points;
+	}
+
+	//TODO: refactor these two out
+   public int GetP1Score(){
+		int intScore = (int)ScoreArray[0];
+		return intScore;
+	}
+
+	public int GetP2Score(){
+		int intScore = (int)ScoreArray[1];
+		return intScore;
+	}
 
     void AssignNPCsToScenes(NonPlayerCharacter[] characters, Scene[] scenes){
 		int sceneCounter = 0;
@@ -438,6 +476,12 @@ public class GameMaster : MonoBehaviour {
 		//Assigns detectives to array. Detective 2 is null if the game is not multiplayer
 		playerCharacters[0] = detective;					//ADDITON BY WEDUNNIT
 		playerCharacters[1] = detective2;					//ADDITON BY WEDUNNIT
+
+		if (isMultiplayer) {
+			ScoreArray = new float[2]{ 1000, 1000 };
+		} else {
+			ScoreArray = new float[1]{ 1000 };
+		}
 	}	
 
 	public void SwitchPlayers(){							//alternates the current character & switches to their room ADDITION BY WEDUNNIT
@@ -457,6 +501,8 @@ public class GameMaster : MonoBehaviour {
 		return currentPlayerIndex;
 	}
 
+
+
 	public Scene GetScene(string sceneName){
 	    foreach (Scene scene in scenes){
 	        if (scene.GetName () == sceneName) {
@@ -468,6 +514,7 @@ public class GameMaster : MonoBehaviour {
 
 	public void ClueCollected(){							//method to increment score count each time a clue is collected, used for multiplayer scoring ADDITION BY WEDUNNIT
 		collectedClueCount [currentPlayerIndex]++;
+		GivePoints (50, currentPlayerIndex);
 		print ("Clues collected by current player: " + collectedClueCount [currentPlayerIndex].ToString());
 	}
 
@@ -534,13 +581,15 @@ public class GameMaster : MonoBehaviour {
 		return timers[currentPlayerIndex];
     }
 
-    //update function will update the variable timer which holds the time taken in the game by 1 every second.
-    private void Update(){
-        if (run_timer){
-			timers[currentPlayerIndex] += Time.deltaTime;  	// time.deltatime is a built in which uses seconds to indicate when to update values by 1
-			for (int i = 0; i<2; i++){							//For both characters, print score each frame ADDITION BY WEDUNNIT
-				string textBoxName = "Player " + (i + 1)+ " Time";				//ADDIITON BY WEDUNNIT
-				string displayedText = textBoxName + ": " + ((int)timers [i]);	//ADDITION BY WEDUNNIT
+    private void Update()  //update function will update the variable timer which holds hte time taken in the game by 1 every second. 
+    {
+        if (run_timer)
+        {
+			TakePoints (Time.deltaTime, currentPlayerIndex);
+//			timers[currentPlayerIndex] += Time.deltaTime;  	// time.deltatime is a built in which uses seconds to indicate when to update values by 1
+			for (int i = 0; i<ScoreArray.Length; i++){							//For both characters, print score each frame ADDITION BY WEDUNNIT
+				string textBoxName = "Player " + (i + 1).ToString() + " Time";				//ADDIITON BY WEDUNNIT
+				string displayedText = textBoxName + ": " + GetScore(i).ToString();	//ADDITION BY WEDUNNIT
 				if (GameObject.Find (textBoxName) != null){									//ADDITION BY WEDUNNIT
 					GameObject.Find (textBoxName).GetComponent<Text>().text = displayedText;	// Updates relevent buttonPanel, ADDITION BY WEDUNNIT
 				}
@@ -573,6 +622,14 @@ public class GameMaster : MonoBehaviour {
 	/// <param name="buildIndex">Build index.</param>
 	public void LoadRoom(string level){	//BY WEDUNNIT
 		this.playerCurrentRoom[currentPlayerIndex] = level;
+	}
+
+	public void SetLockedRoomName(string name){
+		lockedRoomName = name;
+	}
+
+	public string GetLockedRoomName (){
+		return lockedRoomName;
 	}
 
     //sets the current room to be the last room the player was in when they traverse to another room

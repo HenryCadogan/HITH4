@@ -50,7 +50,9 @@ public class PuzzleScript : MonoBehaviour
         if (index == correctIndex){
             //go into the locked room
             celebrationSound.Play();
-            GameMaster.instance.GetPlayerCharacter().unlockPuzzle();
+            //GameMaster.instance.GetPlayerCharacter().unlockPuzzle();
+			GameMaster.instance.PassRiddle();
+			GameMaster.instance.LoadRoom (GameMaster.instance.GetLockedRoomName());
             SceneManager.LoadScene(GameMaster.instance.GetLockedRoomIndex());
         }else{
             booSound.Play();
