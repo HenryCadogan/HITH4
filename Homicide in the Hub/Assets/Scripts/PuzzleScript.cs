@@ -46,19 +46,33 @@ public class PuzzleScript : MonoBehaviour
         }
     }
 
+	public IEnumerator playCorrectSoundWaitAndChangeScene(){
+		celebrationSound.Play();
+		GameMaster.instance.playerCharacters [GameMaster.instance.GetCurrentPlayerIndex()].unlockPuzzle ();
+		yield return new WaitForSeconds(4);
+		SceneManager.LoadScene(GameMaster.instance.GetLockedRoomIndex());
+	}
+
+	public IEnumerator playBooSoundWaitAndChangeScene(){
+		booSound.Play();
+		//use up a turn and return the user to the previous room they were in
+		GameMaster.instance.UseTurn();
+		yield return new WaitForSeconds(4);
+		SceneManager.LoadScene(GameMaster.instance.GetPreviousRoom());
+	}
+
+	/// <summary>
+	/// Tests whetehr the correct button has been pressed. Disables all buttons to remove button spamming, and hadles correct & incorrect answers
+	/// </summary>
     public void IsCorrect(int index){
+		for (int x = 0; x <= 2; x++){
+			buttonPanel.transform.GetChild(x).GetComponent<Button> ().enabled = false;
+		}
         if (index == correctIndex){
             //go into the locked room
-            celebrationSound.Play();
-            //GameMaster.instance.GetPlayerCharacter().unlockPuzzle();
-			GameMaster.instance.PassRiddle();
-			GameMaster.instance.LoadRoom (GameMaster.instance.GetLockedRoomName());
-            SceneManager.LoadScene(GameMaster.instance.GetLockedRoomIndex());
+			StartCoroutine(playCorrectSoundWaitAndChangeScene());
         }else{
-            booSound.Play();
-            //use up a turn and return the user to the previous room they were in
-            GameMaster.instance.UseTurn();
-            SceneManager.LoadScene(GameMaster.instance.GetPreviousRoom());
+			StartCoroutine(playBooSoundWaitAndChangeScene());
         }
     }
 

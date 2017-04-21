@@ -20,7 +20,7 @@ public class GameMaster : MonoBehaviour {
 	public NonPlayerCharacter[] characters;
 	public List<Clue> relevantClues;
 	private MurderWeapon[] murderWeapons;
-	private PlayerCharacter[] playerCharacters = new PlayerCharacter[2];	//ADDITION BY WEDUNNIT
+	public PlayerCharacter[] playerCharacters = new PlayerCharacter[2];	//ADDITION BY WEDUNNIT
 
     // NEW FOR ASSESSMENT 3 - locked room feature
     public Item keyobj;
