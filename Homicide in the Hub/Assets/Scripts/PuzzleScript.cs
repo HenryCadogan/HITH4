@@ -49,7 +49,9 @@ public class PuzzleScript : MonoBehaviour
 	public IEnumerator playCorrectSoundWaitAndChangeScene(){
 		celebrationSound.Play();
 		GameMaster.instance.playerCharacters [GameMaster.instance.GetCurrentPlayerIndex()].unlockPuzzle ();
+		GameMaster.instance.PassRiddle();
 		yield return new WaitForSeconds(4);
+		GameMaster.instance.SaveCurrentPlayerRoom (GameMaster.instance.GetLockedRoomName());
 		SceneManager.LoadScene(GameMaster.instance.GetLockedRoomIndex());
 	}
 

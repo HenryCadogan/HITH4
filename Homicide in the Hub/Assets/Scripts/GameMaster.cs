@@ -620,7 +620,7 @@ public class GameMaster : MonoBehaviour {
 	/// Stores currently loaded room for each player
 	/// </summary>
 	/// <param name="buildIndex">Build index.</param>
-	public void LoadRoom(string level){	//BY WEDUNNIT
+	public void SaveCurrentPlayerRoom(string level){	//BY WEDUNNIT
 		this.playerCurrentRoom[currentPlayerIndex] = level;
 	}
 
