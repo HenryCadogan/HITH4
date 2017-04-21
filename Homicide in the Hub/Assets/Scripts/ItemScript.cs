@@ -35,6 +35,7 @@ public class ItemScript : MonoBehaviour {
 			Destroy (gameObject);
 		} else {				//ADDITION BY WEDUNNIT
 			print ("SORRY PLAYER I CAN'T LET YOU DO THAT");
+			GameMaster.instance.SwitchPlayers();
 		}
        
 
