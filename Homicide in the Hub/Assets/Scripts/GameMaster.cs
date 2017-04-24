@@ -378,16 +378,6 @@ public class GameMaster : MonoBehaviour {
 		return (int)ScoreArray [playerIndex];
 	}
 
-	public void GivePoints(float points, int playerIndex){
-		//TODO: assert
-		ScoreArray[playerIndex] += points;
-	}
-
-	public void TakePoints(float points, int playerIndex){
-		//TODO: assert
-		ScoreArray[playerIndex] -= points;
-	}
-
 	public void GivePoints(float points){
 		//TODO: assert
 		ScoreArray[currentPlayerIndex] += points;
@@ -485,9 +475,11 @@ public class GameMaster : MonoBehaviour {
 	}	
 
 	public void SwitchPlayers(){							//alternates the current character & switches to their room ADDITION BY WEDUNNIT
-		currentPlayerIndex = 1 - currentPlayerIndex;
-		currentTurns = TURNS_PER_GO;
-		GameObject.Find("Local Scripts").GetComponent<LevelManager> ().DisplayCharacterChange();
+		if (isMultiplayer) {
+			currentPlayerIndex = 1 - currentPlayerIndex;
+			currentTurns = TURNS_PER_GO;
+			GameObject.Find ("Local Scripts").GetComponent<LevelManager> ().DisplayCharacterChange ();
+		}
 	}
 
 	public PlayerCharacter GetPlayerCharacter(){
@@ -514,7 +506,7 @@ public class GameMaster : MonoBehaviour {
 
 	public void ClueCollected(){							//method to increment score count each time a clue is collected, used for multiplayer scoring ADDITION BY WEDUNNIT
 		collectedClueCount [currentPlayerIndex]++;
-		GivePoints (50, currentPlayerIndex);
+		GivePoints (50);
 		print ("Clues collected by current player: " + collectedClueCount [currentPlayerIndex].ToString());
 	}
 
@@ -540,8 +532,10 @@ public class GameMaster : MonoBehaviour {
 	/// <summary>
 	/// Uses a turn. ADDITION BY WEDUNNIT
 	/// </summary>
-	/// <returns><c>true</c>, if there are turns left, <c>false</c> otherwise.</returns>
+	/// <returns><c>true</c>, if there are no turns left, <c>false</c> otherwise.</returns>
 	public bool UseTurn(){
+		if (!isMultiplayer)
+			return false;
 		currentTurns--;
 		DisplayTurns (currentTurns);
 		return currentTurns <= 0;
@@ -585,8 +579,7 @@ public class GameMaster : MonoBehaviour {
     {
         if (run_timer)
         {
-			TakePoints (Time.deltaTime, currentPlayerIndex);
-//			timers[currentPlayerIndex] += Time.deltaTime;  	// time.deltatime is a built in which uses seconds to indicate when to update values by 1
+			TakePoints (Time.deltaTime);
 			for (int i = 0; i<ScoreArray.Length; i++){							//For both characters, print score each frame ADDITION BY WEDUNNIT
 				string textBoxName = "Player " + (i + 1).ToString() + " Time";				//ADDIITON BY WEDUNNIT
 				string displayedText = "Player " + (i + 1).ToString() + " Score: " + GetScore(i).ToString();	//ADDITION BY WEDUNNIT

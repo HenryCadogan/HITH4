@@ -35,7 +35,6 @@ public class CharacterSelector : MonoBehaviour {
 	public Text GUIDescription;
 	private int detectiveCounter = 0;
 
-	public bool isMultiGame; //ADDITION BY WEDUNNIT
 	private int player1Detective = 	-1; //ADDITION BY WEDUNNIT
 	private int currentPlayer = 0;		//ADDITION BY WEDUNNIT
 
@@ -94,7 +93,7 @@ public class CharacterSelector : MonoBehaviour {
 
 	//Called when the play button is pressed
 	public void SelectDetective(){
-		if (!isMultiGame) {
+		if (!GameMaster.instance.isMultiplayer) {
 			GameMaster.instance.CreateNewGame (detectives [detectiveCounter]);	//UPDATED BY WEDUNNIT
 			SceneManager.LoadScene ("Atrium");
 		}else if (currentPlayer >= 1) {	//If all detectives have chosen //ADDITION BY WEDUNNIT

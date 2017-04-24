@@ -12,7 +12,6 @@ public class ItemScript : MonoBehaviour {
 
 	//Called when the item is clicked on 
 	void OnMouseDown(){
-		if (GameMaster.instance.GetTurns () > 0 || !GameMaster.instance.isMultiplayer) {			//ADDITION BY WEDUNNIT
 			//Adds the item to the inventory, updates the notebook and destroys the item gameobject.
 			NotebookManager.instance.inventory.AddItemToInventory (item);
 		    GameMaster.instance.ClueCollected (); 	                                                //Increments clue count for current player ADDITION BY WEDUNNIT
@@ -21,22 +20,17 @@ public class ItemScript : MonoBehaviour {
 			// ADDED FOR ASSESSMENT 3 - Key //
 			GameObject.FindWithTag ("local").GetComponent<QuestioningScript> ().UnignoreNPC ();//npc is now unignored
 			
-
-
 			//Plays mysterious sfx by adding audio source to the local scripts game object (an instance is present in every scene), and playing the sound
 			GameObject.Find ("Local Scripts").AddComponent<AudioSource> ();							//ADDITION BY WEDUNNIT
 			GameObject.Find ("Local Scripts").GetComponent<AudioSource> ().clip = Resources.Load<AudioClip> ("Sounds/mysterious-sfx"); //ADDITION BY WEDUNNIT
 			GameObject.Find ("Local Scripts").GetComponent<AudioSource> ().Play ();					//ADDITION BY WEDUNNIT
 
-			if (GameMaster.instance.UseTurn () && GameMaster.instance.isMultiplayer) {	//reduces turns & changes scenes if turns expire ADDITION BY WEDUNNIT
+			if (GameMaster.instance.UseTurn ()) {	//reduces turns & changes scenes if turns expire ADDITION BY WEDUNNIT
 				GameMaster.instance.SwitchPlayers();
 			};	
 
 			Destroy (gameObject);
-		} else {				//ADDITION BY WEDUNNIT
-			print ("SORRY PLAYER I CAN'T LET YOU DO THAT");
-			GameMaster.instance.SwitchPlayers();
-		}
+
        
 
 	}
