@@ -29,7 +29,7 @@ public class Puzzle	//WEDUNNIT
     }
 
     private void LoadJSON(){
-        JSONObject jo = new JSONObject(File.ReadAllText("Riddles.JSON"));
+        JSONObject jo = new JSONObject(File.ReadAllText("Assets/Resources/JSONFiles/Riddles.JSON"));
         //pick random from keys
         int index = Random.Range(0, jo.keys.Count);
         //set the riddle object for simplicity
