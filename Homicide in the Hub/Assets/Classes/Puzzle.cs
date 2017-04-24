@@ -7,7 +7,7 @@ using UnityEngine;
 /// <summary>
 /// Class to be instantiated everytime a new puzzle is to be solved. The puzzle will load in the text from a JSON file each instance.
 /// </summary>
-public class Puzzle
+public class Puzzle	//WEDUNNIT
 {
 
     private string riddleText, correctAnswer;

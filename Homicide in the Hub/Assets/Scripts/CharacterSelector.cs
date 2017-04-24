@@ -36,8 +36,8 @@ public class CharacterSelector : MonoBehaviour {
 	private int detectiveCounter = 0;
 
 	public bool isMultiGame; //ADDITION BY WEDUNNIT
-	private int player1Detective = 	-1;
-	private int currentPlayer = 0;
+	private int player1Detective = 	-1; //ADDITION BY WEDUNNIT
+	private int currentPlayer = 0;		//ADDITION BY WEDUNNIT
 
 
 	// Use this for initialization
@@ -59,7 +59,6 @@ public class CharacterSelector : MonoBehaviour {
 
 		//If the selected detective has already been chosen, switch to the next.
 		if (detectiveCounter == player1Detective) {	//ADDITON BY WEDUNNIT
-			print("rg");
 			detectiveCounter += 1;					//ADDITON BY WEDUNNIT
 			if (detectiveCounter >= 3) {			//ADDITON BY WEDUNNIT
 				detectiveCounter = 0;				//ADDITON BY WEDUNNIT

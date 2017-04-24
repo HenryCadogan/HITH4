@@ -9,7 +9,7 @@ public class PlayerCharacter : Character {
 	private string[] questioningStyles;
 	private string description;
 	private string overallStyle;
-    private bool unlockedPuzzle;
+    private bool unlockedPuzzle; //Wedunnit
 
 	//__Constuctor__
 	//Inherits characterID, sprite and nickname from Character

@@ -1,7 +1,4 @@
 
-// Here is a precise URL of the executable on the team website
-// http://wedunnit.me/webfiles/ass3/HomicideInTheHub-Win.zip
-
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -53,8 +50,7 @@ public class GameOver : MonoBehaviour {
 	}
 	void P1Start(){
 		p1Hud.SetActive (true);
-		GameMaster gMaster = FindObjectOfType<GameMaster> ();	// Find the current Game Master object
-		p1Score = gMaster.GetScore (0);
+		p1Score = GameMaster.instance.GetScore (0);
 		Text spText = spscoreText.GetComponent<Text> ();		// Get the text component of the text box...
 		spText.text = "Your final score score: " + p1Score;
 		Destroy(GameObject.Find("GlobalScripts")); // As we no longer need the GlobalScripts and NotebookCanvas objects...
@@ -69,9 +65,8 @@ public class GameOver : MonoBehaviour {
 		} else {
 			winner = "The winner is player 2!";
 		}
-		GameMaster gMaster = FindObjectOfType<GameMaster> ();	// Find the current Game Master object
-		p1Score = gMaster.GetScore (0);							// Get the player's score
-		p2Score = gMaster.GetScore(1);
+		p1Score = GameMaster.instance.GetScore (0);							// Get the player's score
+		p2Score = GameMaster.instance.GetScore(1);
 		Text p1Text = p1scoreText.GetComponent<Text> ();		// Get the text component of the text box...
 		p1Text.text = "Player 1's score: " + p1Score;
 		Text p2Text = p2scoreText.GetComponent<Text> ();		// Get the text component of the text box...
