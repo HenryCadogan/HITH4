@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using System.IO;
 using System;
 using System.Linq;
+using UnityEngine.SceneManagement;
 
 public class Leaderboard : MonoBehaviour {
 
@@ -103,7 +104,7 @@ public class Leaderboard : MonoBehaviour {
 				return;
 			}
 		}
-		Start ();
+		SceneManager.LoadScene ("Main Menu");
     }
 
     // Use this for initialization

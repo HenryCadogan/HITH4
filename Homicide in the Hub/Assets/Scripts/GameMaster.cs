@@ -589,7 +589,7 @@ public class GameMaster : MonoBehaviour {
 //			timers[currentPlayerIndex] += Time.deltaTime;  	// time.deltatime is a built in which uses seconds to indicate when to update values by 1
 			for (int i = 0; i<ScoreArray.Length; i++){							//For both characters, print score each frame ADDITION BY WEDUNNIT
 				string textBoxName = "Player " + (i + 1).ToString() + " Time";				//ADDIITON BY WEDUNNIT
-				string displayedText = textBoxName + ": " + GetScore(i).ToString();	//ADDITION BY WEDUNNIT
+				string displayedText = "Player " + (i + 1).ToString() + " Score: " + GetScore(i).ToString();	//ADDITION BY WEDUNNIT
 				if (GameObject.Find (textBoxName) != null){									//ADDITION BY WEDUNNIT
 					GameObject.Find (textBoxName).GetComponent<Text>().text = displayedText;	// Updates relevent buttonPanel, ADDITION BY WEDUNNIT
 				}
