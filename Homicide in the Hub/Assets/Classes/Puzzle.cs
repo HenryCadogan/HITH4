@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEngine;
+using System.Text;
 
 /// <summary>
 /// Class to be instantiated everytime a new puzzle is to be solved. The puzzle will load in the text from a JSON file each instance.
@@ -29,7 +30,10 @@ public class Puzzle	//WEDUNNIT
     }
 
     private void LoadJSON(){
-        JSONObject jo = new JSONObject(File.ReadAllText("Assets/Resources/JSONFiles/Riddles.JSON"));
+		TextAsset riddlesJSON = Resources.Load<TextAsset>("JSONFiles/Riddles"); //to include Riddles as a resource
+		string riddlesString = riddlesJSON.text;
+
+		JSONObject jo = new JSONObject(riddlesString);
         //pick random from keys
         int index = Random.Range(0, jo.keys.Count);
         //set the riddle object for simplicity
