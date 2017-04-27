@@ -12,7 +12,7 @@ public class LeaderboardTests{
     }
 
     [Test]
-	public void LeaderboardResetpoistion1Test()
+	public void LeaderboardResetpostion1Test()
 	{
         leaderboard.resetscores();
 		
@@ -22,7 +22,7 @@ public class LeaderboardTests{
 	}
 
     [Test]
-    public void LeaderboardResetpoistion2Test()
+    public void LeaderboardResetpostion2Test()
     {
        //Act
         // reset all of the leaderbaord scores to 0
@@ -34,7 +34,7 @@ public class LeaderboardTests{
     }
 
     [Test]
-    public void LeaderboardrdResetpoistion3Test()
+    public void LeaderboardResetpostion3Test()
     {
         //Act
         // reset all of the leaderbaord scores to 0
