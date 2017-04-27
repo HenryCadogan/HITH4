@@ -43,4 +43,8 @@ public class ButtonScript : MonoBehaviour {
         SceneManager.LoadScene(previousScene);
 
     }
+
+	public void LoadMainMenu(){
+		SceneManager.LoadScene ("Main Menu");
+	}
 }

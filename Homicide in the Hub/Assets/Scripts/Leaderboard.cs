@@ -104,7 +104,6 @@ public class Leaderboard : MonoBehaviour {
 				return;
 			}
 		}
-		SceneManager.LoadScene ("Main Menu");
     }
 
     // Use this for initialization
@@ -113,7 +112,6 @@ public class Leaderboard : MonoBehaviour {
 		//uploadscores(); // called when the leaderbaord scene is loaded for the first time
 		GetScores ();
 		ShowScores ();
-
     }
 
 
