@@ -2,7 +2,7 @@
 using UnityEditor;
 using NUnit.Framework;
 
-public class InventoryTesting{
+public class InventoryTests{
     public GameMaster gm;
 
     [TestFixtureSetUp]

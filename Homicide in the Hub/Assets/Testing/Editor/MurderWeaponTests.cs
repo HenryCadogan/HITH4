@@ -2,7 +2,7 @@
 using UnityEditor;
 using NUnit.Framework;
 
-public class MurderWeaponTesting {
+public class MurderWeaponTests {
 
 	[Test]
 	public void GetDescriptionTest()

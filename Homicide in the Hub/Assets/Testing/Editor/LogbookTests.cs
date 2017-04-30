@@ -2,7 +2,7 @@
 using UnityEditor;
 using NUnit.Framework;
 
-public class LogbookTesting {
+public class LogbookTests {
 
 	[Test]
 	public void AddVerbalClueToLogbookTest()

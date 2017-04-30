@@ -2,7 +2,7 @@
 using UnityEditor;
 using NUnit.Framework;
 using System.Collections.Generic;
-public class NonPlayerCharacterTesting {
+public class NonPlayerCharacterTests {
 
 
 	[Test]

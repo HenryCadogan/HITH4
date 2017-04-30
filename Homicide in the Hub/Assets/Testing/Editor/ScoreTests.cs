@@ -21,7 +21,7 @@ public class ScoreTests {
 	}
 
 	[Test]
-	public void Calculate_Test()
+	public void CalculateTest()
 	{
 		//Arrange
 		ShowScore scoreclass1 = new ShowScore();

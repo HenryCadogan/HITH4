@@ -15,7 +15,7 @@ public class PuzzleTests{
 	}
 
 	[Test]
-	public void TestWrongAnswers(){
+	public void WrongAnswersTest(){
 		//check the list is not empty
 		Assert.AreNotEqual(0,puzzle.GetWrongAnswers().Count);
 
@@ -27,13 +27,13 @@ public class PuzzleTests{
 
 	//test that the Riddle is not an empty string
 	[Test]
-	public void TestRiddleText(){
+	public void RiddleTextTest(){
 		Assert.IsNotNull(puzzle.GetRiddleText());
 	}
 
 	//test that the correct answer is also loaded
 	[Test]
-	public void TestCorrectAnswer(){
+	public void CorrectAnswerTest(){
 		Assert.IsNotNull(puzzle.GetCorrectAnswer());
 	}
 }

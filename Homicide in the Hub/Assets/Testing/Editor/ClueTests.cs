@@ -10,7 +10,7 @@ public class ClueClassForTesting : Clue {
 }
 
 
-public class ClueTesting {
+public class ClueTests {
 
 	[Test]
 	public void GetClueIDTest()

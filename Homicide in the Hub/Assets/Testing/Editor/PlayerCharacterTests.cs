@@ -2,7 +2,7 @@
 using UnityEditor;
 using NUnit.Framework;
 
-public class PlayerCharacterTesting {
+public class PlayerCharacterTests {
 
 	[Test]
 	public void GetQuestioningStylesTest()

@@ -2,7 +2,7 @@
 using UnityEditor;
 using NUnit.Framework;
 
-public class VerbalClueTesting {
+public class VerbalClueTests {
 
 	[Test]
 	public void SetOwnerTest()

@@ -2,7 +2,7 @@
 using UnityEditor;
 using NUnit.Framework;
 
-public class ItemTesting {
+public class ItemTests {
 
 	[Test]
 	public void GetItemSpriteTest()

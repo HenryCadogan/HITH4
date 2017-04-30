@@ -2,7 +2,7 @@
 using UnityEditor;
 using NUnit.Framework;
 
-public class SceneTesting {
+public class SceneTests {
 
 	[Test]
 	public void GetSceneNameTest()

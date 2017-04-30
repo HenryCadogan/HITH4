@@ -10,7 +10,7 @@ public class CharacterClassForTesting : Character {
 	}
 }
 
-public class CharacterTester {
+public class CharacterTests {
 
 	[Test]
 	public void GetCharacterNameTest()
