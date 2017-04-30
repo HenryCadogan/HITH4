@@ -38,7 +38,7 @@ public class PuzzleScript : MonoBehaviour
         correctIndex = Random.Range(0, 3);
         print("Correct Button is: " + correctIndex);
         //set the correct answer button
-        answerButtons[correctIndex].GetComponentInChildren<Text>().text = puzzle.GetCorrectAnwer();
+        answerButtons[correctIndex].GetComponentInChildren<Text>().text = puzzle.GetCorrectAnswer();
         answerButtons.RemoveAt(correctIndex);
         //assign the incorrect answers
         for (int x = 0; x <= 1; x++){
@@ -64,7 +64,7 @@ public class PuzzleScript : MonoBehaviour
 	}
 
 	/// <summary>
-	/// Tests whetehr the correct button has been pressed. Disables all buttons to remove button spamming, and hadles correct & incorrect answers
+	/// Tests whether the correct button has been pressed. Disables all buttons to remove button spamming, and hadles correct & incorrect answers
 	/// </summary>
     public void IsCorrect(int index){
 		for (int x = 0; x <= 2; x++){

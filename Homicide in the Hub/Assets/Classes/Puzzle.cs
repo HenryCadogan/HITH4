@@ -57,7 +57,7 @@ public class Puzzle	//WEDUNNIT
     }
 
 
-    public string GetCorrectAnwer(){
+    public string GetCorrectAnswer(){
         return correctAnswer;
     }
 

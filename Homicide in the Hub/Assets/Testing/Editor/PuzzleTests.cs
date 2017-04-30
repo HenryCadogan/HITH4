@@ -34,6 +34,6 @@ public class PuzzleTests{
 	//test that the correct answer is also loaded
 	[Test]
 	public void TestCorrectAnswer(){
-		Assert.IsNotNull(puzzle.GetCorrectAnwer());
+		Assert.IsNotNull(puzzle.GetCorrectAnswer());
 	}
 }
