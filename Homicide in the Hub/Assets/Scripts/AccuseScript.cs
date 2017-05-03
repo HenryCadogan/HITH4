@@ -80,15 +80,19 @@ public class AccuseScript : MonoBehaviour {
 		if ((accusation == true) && (character.IsMurderer ())) {
 			//If so go to win screen
 			notebookMenu.SetActive (false);
+			GameMaster.instance.GivePoints (250); //TODO: Change this?
             GameMaster.instance.stop_timer();  // stop the timer when the player wins
 			SceneManager.LoadScene ("Win Screen");
 		} else {
 			//If not go to the lose screen 
+
+			//TODO make this not shit
 			notebookMenu.SetActive (false);
 			verbal.SetActive (true);
-            GameMaster.instance.stop_timer();
-            SceneManager.LoadScene("Lose Screen");
-
+			verbalText.text = "You don't have enough evidence to accuse me of murder!";
+			GameMaster.instance.TakePoints (200);
+			ButtonScript bs = FindObjectOfType<ButtonScript> ();
+			bs.back ();
 		}
 	}
 

@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using System.Linq; //Used for take in pick items
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
-//URL For Build of the game is: https://drive.google.com/open?id=0ByQwSszKHcvaUXRCcTZYQ2ZsTDg 
+
+//Used for editing text compnents ADDITION BY WEDUNNIT
 
 public class GameMaster : MonoBehaviour {
 	/* Initialises all of the objects required generate the mystery and the game world except the detectives and verbal clues. 
@@ -11,22 +13,22 @@ public class GameMaster : MonoBehaviour {
 	public Scenario scenario; 
 
 	//Arrays 
-	public static GameMaster instance = null;
+	public static GameMaster instance;
 	static public Scene[] scenes;
 	public Item[] itemClues;
 	public VerbalClue[] verbalClues;
 	public NonPlayerCharacter[] characters;
 	public List<Clue> relevantClues;
 	private MurderWeapon[] murderWeapons;
-	private PlayerCharacter playerCharacter;
+	public PlayerCharacter[] playerCharacters = new PlayerCharacter[2];	//ADDITION BY WEDUNNIT
 
-    // NEW FOR ASSESSMENT 3 - locked room feature  
+    // NEW FOR ASSESSMENT 3 - locked room feature
     public Item keyobj;
     private bool foundkey = false;
 
-//NPC Sprites
-//Made public to allow for dragging and dropping of Sprites
-public Sprite pirateSprite;
+	//NPC Sprites
+	//Made public to allow for dragging and dropping of Sprites
+	public Sprite pirateSprite;
 	public Sprite mimesSprite;
 	public Sprite millionaireSprite;
 	public Sprite cowgirlSprite;
@@ -97,14 +99,32 @@ public Sprite pirateSprite;
     public GameObject keyPrefab;
 
 	private NonPlayerCharacter murderer;
+    
+	//Arrays for riddle room 		BY WEDUNNIT
+    private int lockedRoomIndex;
+	private string lockedRoomName;
+    private bool[] playerHasPassedRiddle = new bool[2];
+    private int[] playerPreviousRoom = new int[2];
+
 	//Relevant Clues
 	private List<Item> relevant_items;
 	private List<VerbalClue> relevant_verbal_clues;
 
 
     // floats for the timer
-    private float timer;
-    private bool run_timer = true;
+	private float[] timers = {0f,0f};
+    private bool run_timer = false;
+
+	//Multiplayer Variables ADDITION BY WEDUNNIT
+	public bool isMultiplayer;
+	private const int TURNS_PER_GO = 2;
+	int currentTurns = TURNS_PER_GO;
+	int currentPlayerIndex = 0;
+	int[] collectedClueCount = new int[2];	//stores collected clue counters used for scoring
+	public string[] playerCurrentRoom = new string[2] {"Atrium","Atrium"}; 	//stores room occupied by each player for when detectives switch
+
+	//Score variables
+	private float[] ScoreArray;
 
 	//Sets as a Singleton
 	void Awake () {  //Makes this a singleton class on awake
@@ -117,10 +137,12 @@ public Sprite pirateSprite;
 	}
 
 
-    void Start() {
+    void Start()
+    {
         //Initialises Variables
         //Responce Arrays
-        string[] pirateResponses = new string[9] {
+        string[] pirateResponses = new string[9]
+        {
             "Shiver me timbers I know nothing!",
             "Arrr matey it ain’t that difficult to understand.",
             "Shiver me timbers, how dare ye threaten me!",
@@ -132,7 +154,8 @@ public Sprite pirateSprite;
             "Arrr matey I don’t think ye need my help to solve this conundrum."
         };
 
-        string[] mimeResponses = new string[9] {
+        string[] mimeResponses = new string[9]
+        {
             "The mimes are taken aback, but contribute nothing more.",
             "The mimes shake their heads.",
             "The mimes flinch, but tell you nothing.",
@@ -144,7 +167,8 @@ public Sprite pirateSprite;
             "The mimes shake their heads. They tell you nothing."
         };
 
-        string[] millionaireResponses = new string[9] {
+        string[] millionaireResponses = new string[9]
+        {
             "Don’t try and force me to tell you anything. I’ve got more money than you.",
             "Don’t patronise me you cretin. I’ve got more money than you.",
             "How dare you threaten me you lunatic, I’ve got more money than you.",
@@ -156,7 +180,8 @@ public Sprite pirateSprite;
             "My good man, you don’t need my help to solve this. Not to mention there’s no money involved."
         };
 
-        string[] cowgirlResponses = new string[9] {
+        string[] cowgirlResponses = new string[9]
+        {
             "I appreciate your candour pardner but I didn’t see anything.",
             "Pardner I do understand, I just didn’t see anything.",
             "Pardner I don’t appreciate threats so don’t try it.",
@@ -168,7 +193,8 @@ public Sprite pirateSprite;
             "Pardner, you’ll have to solve this one without my help, I didn’t see anything."
         };
 
-        string[] romanResponses = new string[9] {
+        string[] romanResponses = new string[9]
+        {
             "What Ho! I understand you want to solve the problem but I saw nothing!",
             "What Ho! Yes I understand, but I saw nothing!",
             "What Ho! Don’t try and threaten me you madman!",
@@ -180,7 +206,8 @@ public Sprite pirateSprite;
             "What Ho!  My good man I’m sorry but I saw nothing."
         };
 
-        string[] wizardResponses = new string[9] {
+        string[] wizardResponses = new string[9]
+        {
             "Errrm...are you sure I can’t interest you in some merchandise instead?",
             "Errrm...I do understand what is going on, I just didn’t see anything.",
             "Errrm...I think you might need to calm down, I’ve got something for that.",
@@ -192,9 +219,10 @@ public Sprite pirateSprite;
             "Errrm...are you sure? I’m not that useful really."
         };
 
-        // NEW FOR ASSSESSMENT 3 - REPOSNES FOR ADDING NEW NPCS 
+        // NEW FOR ASSSESSMENT 3 - REPOSNES FOR ADDING NEW NPCS
 
-        string[] astrogirlResponses = new string[9] {
+        string[] astrogirlResponses = new string[9]
+        {
             "Hah, as if you can force me to say anything incriminating, earthling!",
             "Hey, careful. You don't know who you're talking to!",
             "Okay, friend, you ain't fooling anyone with that scary attitude!",
@@ -206,7 +234,8 @@ public Sprite pirateSprite;
             "Hey, you know more than me about this, so you clearly don't need my help."
         };
 
-        string[] chefRepsonses = new string[9] {
+        string[] chefRepsonses = new string[9]
+        {
             "Sacré bleu! You are very rude, monsieur detective!",
             "How dare you patronise me, monsieur! I am the best Chef in the world!",
             "Oh! No need for this, my friend! I have not seen one thing!",
@@ -218,7 +247,8 @@ public Sprite pirateSprite;
             "What did you say, monsieur? Would you like to taste this freshly baked baguette?"
         };
 
-        string[] madscientistRepsonses = new string[9] {
+        string[] madscientistRepsonses = new string[9]
+        {
             "Do you know who you are talking to! Watch your language, peasant!",
             "This patronising attitude of yours is annoying, I don't know anything that would interest you!",
             "Hahaha, as if someone like you could intimidate someone like me!",
@@ -230,7 +260,8 @@ public Sprite pirateSprite;
             "Very inspiring, but I have no interest in solving this murder."
         };
 
-        string[] robotResponses = new string[9] {
+        string[] robotResponses = new string[9]
+        {
             "Goodness me! I am not programmed to answer to this kind of attitude, beep boop.",
             "Don't you dare patronise me, you mean glob of grease! Beep boop.",
             "Oh my, you are scary… I don't know anything, unfortunately. Beep boop.",
@@ -242,35 +273,45 @@ public Sprite pirateSprite;
             "I'm sorry, detective, but there's nothing that I can do to help you. I'm sure you'll manage on your own."
         };
 
-        // NEW FOR ASSESSEMNT 3 - IGNORE 
+        // NEW FOR ASSESSEMNT 3 - IGNORE
         NonPlayerCharacter[] ignoredNPCs = new NonPlayerCharacter[6];
 
         //Weaknesses
-        List<string> pirateWeaknesses = new List<string> { "Forceful", "Wisecracking", "Kind" };
-        List<string> mimeWeaknesses = new List<string> { "Intimidating", "Coaxing", "Inspiring" };
-        List<string> millionaireWeaknesses = new List<string> { "Forceful", "Rushed", "Kind" };
-        List<string> cowgirlWeaknesses = new List<string> { "Condescending", "Wisecracking", "Inspiring" };
-        List<string> romanWeaknesses = new List<string> { "Condescending", "Coaxing", "Inquisitive" };
-        List<string> wizardWeaknesses = new List<string> { "Intimidating", "Rushed", "Inquisitive" };
-        List<string> robotWeaknesses = new List<string> { "Intimidating", "Coaxing", "Kind" };
-        List<string> astrogirlWeaknesses = new List<string> { "Forceful", "Wisecracking", "Inspiring" };
-        List<string> chefWeaknesses = new List<string> { "Condescending", "Coaxing", "Inquisitie" };
-        List<string> madscientistWeaknesses = new List<string> { "Forceful", "Rushed", "Kind" };
+        List<string> pirateWeaknesses = new List<string> {"Forceful", "Wisecracking", "Kind"};
+        List<string> mimeWeaknesses = new List<string> {"Intimidating", "Coaxing", "Inspiring"};
+        List<string> millionaireWeaknesses = new List<string> {"Forceful", "Rushed", "Kind"};
+        List<string> cowgirlWeaknesses = new List<string> {"Condescending", "Wisecracking", "Inspiring"};
+        List<string> romanWeaknesses = new List<string> {"Condescending", "Coaxing", "Inquisitive"};
+        List<string> wizardWeaknesses = new List<string> {"Intimidating", "Rushed", "Inquisitive"};
+        List<string> robotWeaknesses = new List<string> {"Intimidating", "Coaxing", "Kind"};
+        List<string> astrogirlWeaknesses = new List<string> {"Forceful", "Wisecracking", "Inspiring"};
+        List<string> chefWeaknesses = new List<string> {"Condescending", "Coaxing", "Inquisitie"};
+        List<string> madscientistWeaknesses = new List<string> {"Forceful", "Rushed", "Kind"};
 
 
         //Defining NPC's
-        NonPlayerCharacter pirate = new NonPlayerCharacter("Captain Bluebottle", pirateSprite, "Salty Seadog", piratePref, pirateWeaknesses, pirateResponses);
-        NonPlayerCharacter mimes = new NonPlayerCharacter("The Mime Twins", mimesSprite, "mimes", mimesPref, mimeWeaknesses, mimeResponses);
-        NonPlayerCharacter millionaire = new NonPlayerCharacter("Sir Worchester", millionaireSprite, "Money Bags", millionarePref, millionaireWeaknesses, millionaireResponses);
-        NonPlayerCharacter cowgirl = new NonPlayerCharacter("Jesse Ranger", cowgirlSprite, "Outlaw", cowgirlPref, cowgirlWeaknesses, cowgirlResponses);
-        NonPlayerCharacter roman = new NonPlayerCharacter("Celcius Maximus", romanSprite, "Legionnaire", romanPref, romanWeaknesses, romanResponses);
-        NonPlayerCharacter wizard = new NonPlayerCharacter("Randolf the Deep Purple", wizardSprite, "Dodgy Dealer", wizardPref, wizardWeaknesses, wizardResponses);
+        NonPlayerCharacter pirate = new NonPlayerCharacter("Captain Bluebottle", pirateSprite, "Salty Seadog",
+            piratePref, pirateWeaknesses, pirateResponses);
+        NonPlayerCharacter mimes = new NonPlayerCharacter("The Mime Twins", mimesSprite, "mimes", mimesPref,
+            mimeWeaknesses, mimeResponses);
+        NonPlayerCharacter millionaire = new NonPlayerCharacter("Sir Worchester", millionaireSprite, "Money Bags",
+            millionarePref, millionaireWeaknesses, millionaireResponses);
+        NonPlayerCharacter cowgirl = new NonPlayerCharacter("Jesse Ranger", cowgirlSprite, "Outlaw", cowgirlPref,
+            cowgirlWeaknesses, cowgirlResponses);
+        NonPlayerCharacter roman = new NonPlayerCharacter("Celcius Maximus", romanSprite, "Legionnaire", romanPref,
+            romanWeaknesses, romanResponses);
+        NonPlayerCharacter wizard = new NonPlayerCharacter("Randolf the Deep Purple", wizardSprite, "Dodgy Dealer",
+            wizardPref, wizardWeaknesses, wizardResponses);
 
         // NEW FOR ASSESSMETN 3 - ADDING NEW NPCS //
-        NonPlayerCharacter robot = new NonPlayerCharacter("Droid Mayweather", robotSprite, "Mean Machine", robotPref, robotWeaknesses, robotResponses);
-        NonPlayerCharacter astrogirl = new NonPlayerCharacter("Astrigirl", astrogirlSprite, "Spacegirl", astrogirlPref, astrogirlWeaknesses, astrogirlResponses);
-        NonPlayerCharacter chef = new NonPlayerCharacter("Philip Mingot", chefSprite, "The Gastronomer", chefPref, chefWeaknesses, chefRepsonses);
-        NonPlayerCharacter madscientist = new NonPlayerCharacter("Professor Bon Vose", madscientistSprite, "Dr. Evil", madscientistPref, madscientistWeaknesses, madscientistRepsonses);
+        NonPlayerCharacter robot = new NonPlayerCharacter("Droid Mayweather", robotSprite, "Mean Machine", robotPref,
+            robotWeaknesses, robotResponses);
+        NonPlayerCharacter astrogirl = new NonPlayerCharacter("Astrigirl", astrogirlSprite, "Spacegirl", astrogirlPref,
+            astrogirlWeaknesses, astrogirlResponses);
+        NonPlayerCharacter chef = new NonPlayerCharacter("Philip Mingot", chefSprite, "The Gastronomer", chefPref,
+            chefWeaknesses, chefRepsonses);
+        NonPlayerCharacter madscientist = new NonPlayerCharacter("Professor Bon Vose", madscientistSprite, "Dr. Evil",
+            madscientistPref, madscientistWeaknesses, madscientistRepsonses);
 
         //Defining Scenes
         Scene controlRoom = new Scene("Control Room");
@@ -283,40 +324,82 @@ public Sprite pirateSprite;
         Scene undergroundLab = new Scene("Underground Lab");
 
         //Defining Items
-        MurderWeapon cutlass = new MurderWeapon(cutlassPrefab, "Cutlass", "A worn and well used cutlass", cutlassSprite, "SD");
-        MurderWeapon poison = new MurderWeapon(poisonPrefab, "Empty Poison Bottle", "An empty poison bottle ", poisonSprite, "SD");
-        MurderWeapon garrote = new MurderWeapon(garrotePrefab, "Garrote", "Used for strangling a victim to death", garroteSprite, "SD");
-        MurderWeapon knife = new MurderWeapon(knifePrefab, "Knife", "An incredibly sharp tool meant for cutting meat", knifeSprite, "SD");
-        MurderWeapon laserGun = new MurderWeapon(laserGunPrefab, "Laser Gun", "It's still warm which implies it has been recently fired", laserGunSprite, "SD");
-        MurderWeapon leadPipe = new MurderWeapon(leadPipePrefab, "Lead Pipe", "It's a bit battered with a few dents on the side", leadPipeSprite, "SD");
-        MurderWeapon westernPistol = new MurderWeapon(westernPistolPrefab, "Western Pistol", "The gunpowder residue implies it has been recently fired", westernPistolSprite, "SD");
-        MurderWeapon wizardStaff = new MurderWeapon(wizardStaffPrefab, "Wizard Staff", "The gems still seem to be glow as if it has been used recently", wizardStaffSprite, "SD");
+        MurderWeapon cutlass = new MurderWeapon(cutlassPrefab, "Cutlass", "A worn and well used cutlass", cutlassSprite,
+            "SD");
+        MurderWeapon poison = new MurderWeapon(poisonPrefab, "Empty Poison Bottle", "An empty poison bottle ",
+            poisonSprite, "SD");
+        MurderWeapon garrote = new MurderWeapon(garrotePrefab, "Garrote", "Used for strangling a victim to death",
+            garroteSprite, "SD");
+        MurderWeapon knife = new MurderWeapon(knifePrefab, "Knife", "An incredibly sharp tool meant for cutting meat",
+            knifeSprite, "SD");
+        MurderWeapon laserGun = new MurderWeapon(laserGunPrefab, "Laser Gun",
+            "It's still warm which implies it has been recently fired", laserGunSprite, "SD");
+        MurderWeapon leadPipe = new MurderWeapon(leadPipePrefab, "Lead Pipe",
+            "It's a bit battered with a few dents on the side", leadPipeSprite, "SD");
+        MurderWeapon westernPistol = new MurderWeapon(westernPistolPrefab, "Western Pistol",
+            "The gunpowder residue implies it has been recently fired", westernPistolSprite, "SD");
+        MurderWeapon wizardStaff = new MurderWeapon(wizardStaffPrefab, "Wizard Staff",
+            "The gems still seem to be glow as if it has been used recently", wizardStaffSprite, "SD");
         Item beret = new Item(beretPrefab, "Beret", "A hat most stereotypically worn by the French", beretSprite);
-        Item footprints = new Item(footprintsPrefab, "Bloody Footprints", "Bloody footprints most likely left by the murderer", footprintsSprite);
-        Item gloves = new Item(glovesPrefab, "Bloody Gloves", "Bloody gloves most likely used by the murderer", glovesSprite);
+        Item footprints = new Item(footprintsPrefab, "Bloody Footprints",
+            "Bloody footprints most likely left by the murderer", footprintsSprite);
+        Item gloves = new Item(glovesPrefab, "Bloody Gloves", "Bloody gloves most likely used by the murderer",
+            glovesSprite);
         Item wine = new Item(winePrefab, "Fine Wine", "An expensive vintage that's close to 100 years old", wineSprite);
-        Item shatteredGlass = new Item(shatteredGlassPrefab, "Shattered Glass", "Broken glass shards spread quite close together", shatteredGlassSprite);
-        Item shrapnel = new Item(shrapnelPrefab, "Shrapnel", "Shrapnel from an explosion or gun being fired", shrapnelSprite);
-        Item smellyDeath = new Item(smellyDeathPrefab, "Smelly Death", "All that remains of the victim", smellyDeathSprite);
-        Item spellbook = new Item(spellbookPrefab, "Spellbook", "A spellbook used by those who practise in the magic arts", spellbookSprite);
-        Item tripwire = new Item(tripwirePrefab, "Tripwire", "A used tripwire most likely used to immobilize the victim", tripwireSprite);
+        Item shatteredGlass = new Item(shatteredGlassPrefab, "Shattered Glass",
+            "Broken glass shards spread quite close together", shatteredGlassSprite);
+        Item shrapnel = new Item(shrapnelPrefab, "Shrapnel", "Shrapnel from an explosion or gun being fired",
+            shrapnelSprite);
+        Item smellyDeath = new Item(smellyDeathPrefab, "Smelly Death", "All that remains of the victim",
+            smellyDeathSprite);
+        Item spellbook = new Item(spellbookPrefab, "Spellbook",
+            "A spellbook used by those who practise in the magic arts", spellbookSprite);
+        Item tripwire = new Item(tripwirePrefab, "Tripwire",
+            "A used tripwire most likely used to immobilize the victim", tripwireSprite);
 
         // NEW FOR ASSESSMENT 3 - LOCKED ROOM FEATURE
         Item key = new Item(keyPrefab, "Key", "Key has the words underground lab on it", keySprite);
 
-        murderWeapons = new MurderWeapon[8] { cutlass, poison, garrote, knife, laserGun, leadPipe, westernPistol, wizardStaff };
-        itemClues = new Item[9] { beret, footprints, gloves, wine, shatteredGlass, shrapnel, smellyDeath, spellbook, tripwire };
-        characters = new NonPlayerCharacter[10] { pirate, mimes, millionaire, cowgirl, roman, wizard, robot, astrogirl, chef, madscientist };
-        scenes = new Scene[8] { atrium, lectureTheatre, lakehouse, controlRoom, kitchen, islandOfInteraction, roof, undergroundLab };
+        murderWeapons = new MurderWeapon[8]
+            {cutlass, poison, garrote, knife, laserGun, leadPipe, westernPistol, wizardStaff};
+        itemClues = new Item[9]
+            {beret, footprints, gloves, wine, shatteredGlass, shrapnel, smellyDeath, spellbook, tripwire};
+        characters = new NonPlayerCharacter[10]
+            {pirate, mimes, millionaire, cowgirl, roman, wizard, robot, astrogirl, chef, madscientist};
+        scenes = new Scene[8]
+            {atrium, lectureTheatre, lakehouse, controlRoom, kitchen, islandOfInteraction, roof, undergroundLab};
         keyobj = key;
-        
+        //Set locked room index
+        lockedRoomIndex = Random.Range(5, 11);
+        Debug.Log("Locked room is: " + SceneManager.GetSceneByBuildIndex(lockedRoomIndex).name + "At Build index: " + lockedRoomIndex);
+    }
+
+	public int GetScore(int playerIndex){
+		return (int)ScoreArray [playerIndex];
 	}
 
-   
+	public void GivePoints(float points){
+		//TODO: assert
+		ScoreArray[currentPlayerIndex] += points;
+	}
 
-    
+	public void TakePoints(float points){
+		//TODO: assert
+		ScoreArray[currentPlayerIndex] -= points;
+	}
 
-	void AssignNPCsToScenes(NonPlayerCharacter[] characters, Scene[] scenes){
+	//TODO: refactor these two out
+   public int GetP1Score(){
+		int intScore = (int)ScoreArray[0];
+		return intScore;
+	}
+
+	public int GetP2Score(){
+		int intScore = (int)ScoreArray[1];
+		return intScore;
+	}
+
+    void AssignNPCsToScenes(NonPlayerCharacter[] characters, Scene[] scenes){
 		int sceneCounter = 0;
 		Shuffler shuffler = new Shuffler ();
 		shuffler.Shuffle (characters);
@@ -331,7 +414,6 @@ public Sprite pirateSprite;
 				sceneCounter = 0;
 			}
 		}
-
 	}
 
 	void AssignItemsToScenes(Item[] items, Scene[] scenes) {
@@ -347,23 +429,16 @@ public Sprite pirateSprite;
             }
             // NEW FOR ASSESSMENT 3 - LOCKED ROOM 
         }
-        int room = Random.Range(0, 7);                            // pick a random number between 0 and 7 to reference the rooms
-        while (scenes[room].GetName() == "Underground Lab")      // ensure that the room selscted isn't the underground lab 
-        {
-            room = Random.Range(0, 7);    
-        }
+    }
 
-        scenes[room].setKey(keyobj);     // using the reference to that room get it from the scenes list and set the key to that room. 
-        
-	}
-
-	public void CreateNewGame(PlayerCharacter detective){ //Called when the player presses play
+	public void CreateNewGame(PlayerCharacter detective, PlayerCharacter detective2=null, bool isMulti = false){ //Called when the player presses play //UPDATED BY WEDUNNIT
 		//Reset values from a previous playthough
 		ResetNotebook();
 		ResetAll(scenes);
 
 		//Create a Scenario
 		scenario = new Scenario (murderWeapons, itemClues, characters);
+		isMultiplayer = isMulti; 	//ADDITON BY WEDUNNIT
 
 		scenario.chooseMotive ();
 		string motive = scenario.getMotive ();
@@ -386,22 +461,53 @@ public Sprite pirateSprite;
 
 		//Assign To rooms
 		AssignNPCsToScenes (characters,scenes);				//Assigns NPCS to scenes
-		AssignItemsToScenes (itemClues,scenes);					//Assigns Items to scenes
-		playerCharacter = detective;	
-	}	
-		
+		AssignItemsToScenes (itemClues,scenes);				//Assigns Items to scenes
 
-	public PlayerCharacter GetPlayerCharacter(){
-		return playerCharacter;
+		//Assigns detectives to array. Detective 2 is null if the game is not multiplayer
+		playerCharacters[0] = detective;					//ADDITON BY WEDUNNIT
+		playerCharacters[1] = detective2;					//ADDITON BY WEDUNNIT
+
+		if (isMultiplayer) {
+			ScoreArray = new float[2]{ 1000, 1000 };
+		} else {
+			ScoreArray = new float[1]{ 1000 };
+		}
+	}	
+
+	public void SwitchPlayers(){							//alternates the current character & switches to their room ADDITION BY WEDUNNIT
+		if (isMultiplayer) {
+			currentPlayerIndex = 1 - currentPlayerIndex;
+			currentTurns = TURNS_PER_GO;
+			GameObject.Find ("Local Scripts").GetComponent<LevelManager> ().DisplayCharacterChange ();
+		}
 	}
 
-	public Scene GetScene(string sceneName){
-		for (int i = 0; i < scenes.Length; i++) {
-			if (scenes [i].GetName () == sceneName) {
-				return scenes [i];
-			} 
+	public PlayerCharacter GetPlayerCharacter(){
+		if (currentTurns <= 0 && isMultiplayer) {		//ADDITION BY WEDUNNIT
+			SwitchPlayers ();								//ADDITION BY WEDUNNIT
 		}
-		return null;
+		return playerCharacters[currentPlayerIndex];
+	}
+
+	public int GetCurrentPlayerIndex(){						//ADDITION BY WEDUNNIT
+		return currentPlayerIndex;
+	}
+
+
+
+	public Scene GetScene(string sceneName){
+	    foreach (Scene scene in scenes){
+	        if (scene.GetName () == sceneName) {
+	            return scene;
+	        }
+	    }
+	    return null;
+	}
+
+	public void ClueCollected(){							//method to increment score count each time a clue is collected, used for multiplayer scoring ADDITION BY WEDUNNIT
+		collectedClueCount [currentPlayerIndex]++;
+		GivePoints (50);
+		print ("Clues collected by current player: " + collectedClueCount [currentPlayerIndex].ToString());
 	}
 
 	public void ResetAll(Scene[] scenes){
@@ -410,17 +516,41 @@ public Sprite pirateSprite;
 		}
 
 	}
-		
+
+	private void DisplayTurns(int currentTurns){	//Displays current turns to the screen if playing multiplayer ADDITION BY WEDUNNIT,
+		if (isMultiplayer) {
+			if (GameObject.Find ("Turn Counter") != null) {
+				GameObject.Find ("Turn Counter").GetComponent<Text> ().text = "Turns remaining: " + currentTurns;
+			}
+		}
+	}
+
+	public int GetTurns(){		//ADDITIOM BY WEDUNNIT
+		return currentTurns;
+	}
+
+	/// <summary>
+	/// Uses a turn. ADDITION BY WEDUNNIT
+	/// </summary>
+	/// <returns><c>true</c>, if there are no turns left, <c>false</c> otherwise.</returns>
+	public bool UseTurn(){
+		if (!isMultiplayer)
+			return false;
+		currentTurns--;
+		DisplayTurns (currentTurns);
+		return currentTurns <= 0;
+	}
+
 	public List<Item> GetRelevantItems(){
-		return this.relevant_items;
+		return relevant_items;
 	}
 
 	public List<VerbalClue> GetRelevantVerbalClues(){
-		return this.relevant_verbal_clues;
+		return relevant_verbal_clues;
 	}
 
 	public string GetMurderer(){
-		return this.murderer.getCharacterID();
+		return murderer.getCharacterID();
 	}
 
 	private void ResetNotebook(){
@@ -440,29 +570,68 @@ public Sprite pirateSprite;
     {
         run_timer = true;
     }
-    public float get_timer()  // called at the end to calaute teh score based on the time taken 
+    public float get_timer()  // called at the end to calaute the score based on the time taken 
     {
-        return timer;
+		return timers[currentPlayerIndex];
     }
 
     private void Update()  //update function will update the variable timer which holds hte time taken in the game by 1 every second. 
     {
         if (run_timer)
         {
-            timer += Time.deltaTime;  // time.deltatime is a built in which uses seconds to indicate when to update values by 1
-           
+			TakePoints (Time.deltaTime);
+			for (int i = 0; i<ScoreArray.Length; i++){							//For both characters, print score each frame ADDITION BY WEDUNNIT
+				string textBoxName = "Player " + (i + 1).ToString() + " Time";				//ADDIITON BY WEDUNNIT
+				string displayedText = "Player " + (i + 1).ToString() + " Score: " + GetScore(i).ToString();	//ADDITION BY WEDUNNIT
+				if (GameObject.Find (textBoxName) != null){									//ADDITION BY WEDUNNIT
+					GameObject.Find (textBoxName).GetComponent<Text>().text = displayedText;	// Updates relevent buttonPanel, ADDITION BY WEDUNNIT
+				}
+			}
         }
     }
 
-    // NEW FOR ASSSESSMENT 3 - LOCKED ROOM FEATURE 
-    public void foundKey()   // sets the foundkey variable to true once the key has been found by the player 
-    {
-        foundkey = true;
+    // NEW FOR ASSSESSMENT 3 - LOCKED ROOM FEATURE
+    // KEY IS BEING REPLACED BY RIDDLE FOR ASSESSMENT 4
+
+    //THE FOLLOWING ARE ADDITIONS BY WEDUNNIT
+    //checks if the current player has passed the riddle in this instance of the game
+    public bool HasPassedRiddle(){
+        return playerHasPassedRiddle[currentPlayerIndex];
     }
 
-    public bool iskeyfound()   // a procdure which can be called as a predicate ot test whether the key has been found by the player so far 
-    {
-        return foundkey;
+    //The current player has passed the riddle
+    public void PassRiddle(){
+        playerHasPassedRiddle[currentPlayerIndex] = true;
+    }
+
+    //returns the index of the last room that the player was in, incase they fail the riddle
+    public int GetPreviousRoom(){
+        return playerPreviousRoom[currentPlayerIndex];
+    }
+
+	/// <summary>
+	/// Stores currently loaded room for each player
+	/// </summary>
+	/// <param name="buildIndex">Build index.</param>
+	public void SaveCurrentPlayerRoom(string level){	//BY WEDUNNIT
+		this.playerCurrentRoom[currentPlayerIndex] = level;
+	}
+
+	public void SetLockedRoomName(string name){
+		lockedRoomName = name;
+	}
+
+	public string GetLockedRoomName (){
+		return lockedRoomName;
+	}
+
+    //sets the current room to be the last room the player was in when they traverse to another room
+    public void SetPreviousRoom(int roomIndex){
+        playerPreviousRoom[currentPlayerIndex] = roomIndex;
+    }
+    //returns the integer index of the locked room for which the riddle has to be passed in order to enter
+    public int GetLockedRoomIndex(){
+        return lockedRoomIndex;
     }
 
 }

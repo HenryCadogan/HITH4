@@ -19,12 +19,12 @@ public class PlayerMovement : MonoBehaviour {
 
 	void Update () {
 		if (Input.GetMouseButtonDown(0)) {		//When left mouse button is pressed
-			targetPosition= Camera.main.ScreenToWorldPoint(Input.mousePosition);
+			targetPosition= Camera.main.ScreenToWorldPoint(Input.mousePosition);		
 			spriteRenderer.flipX = (targetPosition.x < transform.position.x); //Flips the detective sprite based on where the player clicks. 
 		}
-		//Boundaries for movement
-		if ((targetPosition.x > boundaries [0]) && (targetPosition.x < boundaries [1]) && (targetPosition.y > boundaries [2]) && (targetPosition.y < boundaries [3])) {
-			transform.position = Vector3.MoveTowards (transform.position, targetPosition, speed * Time.deltaTime);
-		} 
+		//Boundaries for movement//REMOVED BY WEDUNNIT AS WE DONT THINK CHARACTER MOVEMENT IS NECCESSARY
+		//if ((targetPosition.x > boundaries [0]) && (targetPosition.x < boundaries [1]) && (targetPosition.y > boundaries [2]) && (targetPosition.y < boundaries [3])) {//REMOVED BY WEDUNNIT AS WE DONT THINK CHARACTER MOVEMENT IS NECCESSARY
+		//	transform.position = Vector3.MoveTowards (transform.position, targetPosition, speed * Time.deltaTime);//REMOVED BY WEDUNNIT AS WE DONT THINK CHARACTER MOVEMENT IS NECCESSARY
+		//} 
 	}    
 }

@@ -1,2 +1,0 @@
-There should be 'Homicide in the Hub v0.8_Data'
-folder next to the executable

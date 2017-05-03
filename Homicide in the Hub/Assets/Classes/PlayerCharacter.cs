@@ -8,7 +8,8 @@ public class PlayerCharacter : Character {
 	//__Variables__
 	private string[] questioningStyles;
 	private string description;
-	private string overallStyle; 
+	private string overallStyle;
+    private bool unlockedPuzzle; //Wedunnit
 
 	//__Constuctor__
 	//Inherits characterID, sprite and nickname from Character
@@ -16,6 +17,7 @@ public class PlayerCharacter : Character {
 		this.questioningStyles = questioningStyles;
 		this.overallStyle = overallStyle;
 		this.description = description;
+	    unlockedPuzzle = false;  //ADDITION BY WEDUNNIT
 	}
 
 	//__Methods__
@@ -31,4 +33,14 @@ public class PlayerCharacter : Character {
 	public string GetDescription(){
 		return this.description;
 	}
+
+    //ADDITIONS BY WEDUNNIT
+    public bool HasUnlockedPuzzle(){
+        return unlockedPuzzle;
+    }
+
+    public void unlockPuzzle(){
+        unlockedPuzzle = true;
+    }
+    //END OF ADDITIONS BY WEDUNNIT
 }

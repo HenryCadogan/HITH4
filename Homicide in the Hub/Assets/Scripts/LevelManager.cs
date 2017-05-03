@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class LevelManager : MonoBehaviour {
 	//One LevelManager per level
@@ -14,7 +15,7 @@ public class LevelManager : MonoBehaviour {
 	private SpriteRenderer playerSpriteRenderer;
 	public GameObject[] characterSpawnPoints;
 	public GameObject[] itemSpawnPoints;
-    public GameObject keyspwanpoint;
+	public GameObject SwitchPanel;	//ADDITION BY WEDUNNIT
 
 	//Used to change the scaling of characters and items per room
 	public float characterScaling = 1;
@@ -32,6 +33,16 @@ public class LevelManager : MonoBehaviour {
 		Scene scene = GameMaster.instance.GetScene(sceneName);
 		AssignCharactersToSpawnPoints (scene);
 		AssignItemsToSpawnPoints (scene);
+
+
+		//Multiplayer considerations //ALL ADDITIONS BY WEDUNNIT
+		if (!GameMaster.instance.isMultiplayer) {
+			GameObject.Find ("Actions Panel").SetActive (false);
+			GameObject.Find ("Time Panel 2").SetActive (false);
+		}else{
+			GameObject.Find("Turn Counter").GetComponent<Text>().text = "Actions remaining: " + GameMaster.instance.GetTurns().ToString();
+		}
+		GameMaster.instance.set_timer ();	//turns timer on to not include the menu time
 	}
 
 	//Spawns characters in character spawnpoints
@@ -46,7 +57,12 @@ public class LevelManager : MonoBehaviour {
 				characterInteraction.SetCharacter (character);				//Tells the prefab which character it is
 			}
 		}
+	}
 
+	public void DisplayCharacterChange(){									//ADDITION BY WEDUNNIT
+		SwitchPanel.SetActive (true);
+		SwitchPanel.transform.FindChild ("Text2").GetComponent<Text> ().text = "It's now player " + (GameMaster.instance.GetCurrentPlayerIndex() + 1) + "'s turn.";
+		GameObject.Find ("Detective").SetActive (false);
 	}
 
 	//Spawns items in item spawnpoints
@@ -55,7 +71,7 @@ public class LevelManager : MonoBehaviour {
 		if (scene.GetItems ().Count > 0) {//Checks if there are items to spawn
 			foreach (Item item in scene.GetItems()) {
 				if (!NotebookManager.instance.inventory.GetInventory ().Contains (item)) {
-					GameObject prefab = Instantiate (item.GetPrefab (), itemSpawnPoints [itemSpawnPointCounter].transform.position, Quaternion.identity) as GameObject; //Spawns the item prefab at the position of the given spawnpoint
+					GameObject prefab = Instantiate (item.GetPrefab (), itemSpawnPoints [itemSpawnPointCounter].transform.position, Quaternion.identity); //Spawns the item prefab at the position of the given spawnpoint
 					prefab.transform.localScale *= itemScaling; 		//Scales the item relative to itemScaling
 					itemSpawnPointCounter += 1;
 					ItemScript itemScript = prefab.GetComponent<ItemScript> ();
@@ -63,17 +79,5 @@ public class LevelManager : MonoBehaviour {
 				}
 			}
 		}
-        // NEW FOR ASSESSMENt 3 - locked room feature // 
-        if ((scene.hasKey()) && !(GameMaster.instance.iskeyfound()))  // if the room has the key adn the key has not been found yet 
-        {
-            GameObject prefab = Instantiate(scene.getKey().GetPrefab(),keyspwanpoint.transform.position, Quaternion.identity) as GameObject;  // get the key prefab and make an instance of it 
-            prefab.transform.localScale *= itemScaling;        // set it to the rihgt scale 
-            ItemScript itemscript = prefab.GetComponent<ItemScript>();    //collect the correct script to attach 
-            itemscript.SetItem(scene.getKey());  // set the key to the spwanpoint
-        
-             
-
-
-        }
 	}
 }
